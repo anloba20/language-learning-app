@@ -1,121 +1,166 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useMemo, useState } from 'react'
+import type { FormEvent } from 'react'
 import './App.css'
 
+type AuthMode = 'login' | 'register'
+
+type AuthForm = {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+const initialForm: AuthForm = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [mode, setMode] = useState<AuthMode>('login')
+  const [form, setForm] = useState<AuthForm>(initialForm)
+  const [message, setMessage] = useState('')
+
+  const title = mode === 'login' ? 'Welcome back' : 'Create account'
+  const submitText = mode === 'login' ? 'Sign in' : 'Create account'
+
+  const helperText = useMemo(() => {
+    return mode === 'login'
+      ? 'Continue your language practice.'
+      : 'Start saving points and level progress.'
+  }, [mode])
+
+  function updateField(field: keyof AuthForm, value: string) {
+    setForm((currentForm) => ({ ...currentForm, [field]: value }))
+    setMessage('')
+  }
+
+  function switchMode(nextMode: AuthMode) {
+    setMode(nextMode)
+    setForm(initialForm)
+    setMessage('')
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (!form.email.trim() || !form.password.trim()) {
+      setMessage('Email and password are required.')
+      return
+    }
+
+    if (mode === 'register') {
+      if (!form.name.trim()) {
+        setMessage('Name is required.')
+        return
+      }
+
+      if (form.password !== form.confirmPassword) {
+        setMessage('Passwords must match.')
+        return
+      }
+    }
+
+    setMessage(
+      mode === 'login'
+        ? 'Login form is ready for backend integration.'
+        : 'Registration form is ready for backend integration.',
+    )
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+    <main className="auth-page">
+      <section className="brand-panel" aria-label="Language learning app">
+        <p className="eyebrow">Russian / Estonian / English</p>
+        <h1>Language Learning App</h1>
+        <p className="brand-copy">
+          A game-based place to practice languages and keep progress in one account.
+        </p>
+        <div className="language-strip" aria-label="Supported languages">
+          <span>RU</span>
+          <span>ET</span>
+          <span>EN</span>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <section className="auth-panel" aria-labelledby="auth-title">
+        <div className="mode-switch" aria-label="Authentication mode">
+          <button
+            type="button"
+            className={mode === 'login' ? 'active' : ''}
+            onClick={() => switchMode('login')}
+          >
+            Sign in
+          </button>
+          <button
+            type="button"
+            className={mode === 'register' ? 'active' : ''}
+            onClick={() => switchMode('register')}
+          >
+            Register
+          </button>
+        </div>
+
+        <div className="auth-heading">
+          <h2 id="auth-title">{title}</h2>
+          <p>{helperText}</p>
+        </div>
+
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          {mode === 'register' && (
+            <label>
+              <span>Name</span>
+              <input
+                type="text"
+                autoComplete="name"
+                value={form.name}
+                onChange={(event) => updateField('name', event.target.value)}
+              />
+            </label>
+          )}
+
+          <label>
+            <span>Email</span>
+            <input
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={(event) => updateField('email', event.target.value)}
+            />
+          </label>
+
+          <label>
+            <span>Password</span>
+            <input
+              type="password"
+              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+              value={form.password}
+              onChange={(event) => updateField('password', event.target.value)}
+            />
+          </label>
+
+          {mode === 'register' && (
+            <label>
+              <span>Confirm password</span>
+              <input
+                type="password"
+                autoComplete="new-password"
+                value={form.confirmPassword}
+                onChange={(event) => updateField('confirmPassword', event.target.value)}
+              />
+            </label>
+          )}
+
+          {message && <p className="form-message">{message}</p>}
+
+          <button className="submit-button" type="submit">
+            {submitText}
+          </button>
+        </form>
+      </section>
+    </main>
   )
 }
 
