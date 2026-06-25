@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import { generateAcсessToken } from './auth.service';
+import { generateAccessToken } from './auth.service';
 
 export const loginController = (req:Request, res: Response) => {
     // some code here to validate user credentials and generate a token
-    const token = generateAcсessToken(req.body);
+    const token = generateAccessToken(req.body);
     res.json({ token });
 };
 
