@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { jwtSecret } from "../../../../../utils/config/env";
 import jwt from 'jsonwebtoken';
 import { AuthTokenPayload } from "../../auth.types";
 import { generateAccessToken } from "../../auth.service";
+import { jwtSecret } from "../../../../config/env";
 
 
 describe('AuthService', () => {

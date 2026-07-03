@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { AuthTokenPayload } from './auth.types';
-import { jwtSecret } from '../../../utils/config/env';
+import { jwtSecret } from '../../config/env';
 import jwt from 'jsonwebtoken';
 
 
