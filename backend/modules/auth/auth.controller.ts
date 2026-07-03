@@ -3,7 +3,8 @@ import { generateAccessToken } from './auth.service';
 
 export const loginController = (req:Request, res: Response) => {
     // some code here to validate user credentials and generate a token
-    const token = generateAccessToken(req.body);
+    const {userId, role} = req.body;
+    const token = generateAccessToken({ userId, role });
     res.json({ token });
 };
 
