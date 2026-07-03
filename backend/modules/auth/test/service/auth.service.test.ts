@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import jwt from 'jsonwebtoken';
 import { AuthTokenPayload } from "../../auth.types";
 import { generateAccessToken } from "../../auth.service";
-import { jwtSecret } from "../../../../config/env";
+import { jwtSecret } from "../../../../config/auth";
 
 
 describe('AuthService', () => {

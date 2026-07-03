@@ -1,5 +1,5 @@
 import type { Knex } from 'knex';
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from './config/env';
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from './config/db';
 
 const knexConfig: Knex.Config = {
   client: 'pg',
