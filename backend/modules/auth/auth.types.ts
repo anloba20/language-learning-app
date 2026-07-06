@@ -7,5 +7,9 @@ export type AuthTokenPayload = {
     role: UserRole;
 };
 
-export type RegisteredUser = Omit<RegisterInput, 'password'>
+export type RegisteredUserDbType = Omit<RegisterInput, 'password'> & { id: string; role: UserRole };
 export type RegisterUserInput = Omit<RegisterInput, 'password'> & { password_hash: string };
+export interface RegisteredUser {
+    user: RegisteredUserDbType;
+    token: string;
+}

@@ -19,8 +19,9 @@ export const hashPassword = async (password: string): Promise<string> => {
 export const registerUser = async ({ nickname, password, email }: RegisterInput): Promise<RegisteredUser> => {
     try {
         const passwordHash = await hashPassword(password);
-        const createdUser = await createUser({ nickname, password_hash: passwordHash, email });
-        return createdUser;
+        const {id, role} = await createUser({ nickname, password_hash: passwordHash, email });
+        const token = generateAccessToken({ userId: id, role });
+        return { "user": { id, nickname, email, role }, token };
     } catch (error: any) {
         if (error?.code === '23505') {
             throw new UserAlreadyExistsError();

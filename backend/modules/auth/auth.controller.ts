@@ -14,8 +14,8 @@ export const registerController = async (req:Request, res: Response) => {
         if (!result.success) {
             return res.status(400).json({ errors: result.error.issues });
         }   
-        const { nickname, email } = await registerUser(result.data);
-        res.json({ nickname, email }).sendStatus(201);
+        const createdUser = await registerUser(result.data);
+        res.status(201).json(createdUser);
     } catch (error: any) {
         if (error.name === 'UserAlreadyExistsError') {
             return res.status(409).json({ message: 'Nickname or email already exists' });
