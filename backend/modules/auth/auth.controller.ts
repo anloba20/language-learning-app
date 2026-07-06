@@ -1,19 +1,27 @@
 import type { Request, Response } from 'express';
-import { generateAccessToken } from './auth.service';
-import { createUser } from './auth.database';
+import { generateAccessToken, registerUser } from './auth.service';
+import { registerSchema } from './auth.schema';
 
 export const loginController = (req:Request, res: Response) => {
-    // some code here to validate user credentials and generate a token
     const {userId, role} = req.body;
     const token = generateAccessToken({ userId, role });
     res.json({ token });
 };
 
 export const registerController = async (req:Request, res: Response) => {
-    const { username, password } = req.body;
-    // some code here to create a new user in the database
-    await createUser(username, password);
-    res.send('Register endpoint');
+    try {
+        const result = registerSchema.safeParse(req.body);
+        if (!result.success) {
+            return res.status(400).json({ errors: result.error.issues });
+        }   
+        const { nickname, email } = await registerUser(result.data);
+        res.json({ nickname, email }).sendStatus(201);
+    } catch (error: any) {
+        if (error.name === 'UserAlreadyExistsError') {
+            return res.status(409).json({ message: 'Nickname or email already exists' });
+        }
+        throw error;
+    }
 };
 
 export const profileController = (req:Request, res: Response) => {
