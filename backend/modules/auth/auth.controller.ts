@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { generateAccessToken } from './auth.service';
+import { createUser } from './auth.database';
 
 export const loginController = (req:Request, res: Response) => {
     // some code here to validate user credentials and generate a token
@@ -8,7 +9,10 @@ export const loginController = (req:Request, res: Response) => {
     res.json({ token });
 };
 
-export const registerController = (req:Request, res: Response) => {
+export const registerController = async (req:Request, res: Response) => {
+    const { username, password } = req.body;
+    // some code here to create a new user in the database
+    await createUser(username, password);
     res.send('Register endpoint');
 };
 
