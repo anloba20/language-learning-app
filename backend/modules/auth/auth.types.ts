@@ -13,3 +13,6 @@ export interface RegisteredUser {
     user: RegisteredUserDbType;
     token: string;
 }
+export type UserCredentials = RegisteredUserDbType & {
+    password_hash: string;
+};

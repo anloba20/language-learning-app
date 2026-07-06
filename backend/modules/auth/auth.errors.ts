@@ -4,3 +4,10 @@ export class UserAlreadyExistsError extends Error {
         this.name = 'UserAlreadyExistsError';
     }
 }
+
+export class InvalidCredentialsError extends Error {
+    constructor() {
+        super('Invalid nickname or password');
+        this.name = 'InvalidCredentialsError';
+    }
+}
