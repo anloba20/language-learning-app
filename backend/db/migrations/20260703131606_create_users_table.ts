@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text('password_hash').notNullable();
         table.text('role').notNullable().defaultTo('user').checkIn(['user', 'admin']);
         table.timestamps(true, true);
-    }); 
+    });
 }
 
 

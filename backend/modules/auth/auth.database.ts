@@ -1,5 +1,5 @@
 import { db } from "../../db/database";
-import { RegisteredUserDbType, RegisterUserInput, UserCredentials } from "./auth.types";
+import type { RegisteredUserDbType, RegisterUserInput, UserCredentials } from "./auth.types";
 
 export const createUser = async ({ nickname, password_hash, email }: RegisterUserInput): Promise<RegisteredUserDbType> => {
         const [{id, role}] =  await db('users').insert({

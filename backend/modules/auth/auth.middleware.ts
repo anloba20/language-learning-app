@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { AuthTokenPayload } from './auth.types';
+import type { AuthTokenPayload } from './auth.types';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../../config/auth';
 
@@ -18,8 +18,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         const {role, userId}: AuthTokenPayload = jwt.verify(token, jwtSecret as string) as AuthTokenPayload;
         req.body = { ...userData, userId, role };
         next();
-    } catch (error) {
+    } catch {
         return res.status(401).json({ message: 'Unauthorized' });
     }
-   
+
 }

@@ -1,4 +1,4 @@
-import { RegisterInput } from "./auth.schema";
+import type { RegisterInput } from "./auth.schema";
 
 export type UserRole = 'user' | 'admin';
 

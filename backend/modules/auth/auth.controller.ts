@@ -24,7 +24,7 @@ export const registerController = async (req:Request, res: Response) => {
         const result = registerSchema.safeParse(req.body);
         if (!result.success) {
             return res.status(400).json({ errors: result.error.issues });
-        }   
+        }
         const createdUser = await registerUser(result.data);
         res.status(201).json(createdUser);
     } catch (error: unknown) {
@@ -37,4 +37,4 @@ export const registerController = async (req:Request, res: Response) => {
 
 export const profileController = (req:Request, res: Response) => {
     res.send('Profile endpoint');
-};  
+};
