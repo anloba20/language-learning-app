@@ -6,6 +6,7 @@ import { AuthModeSwitch } from '../features/auth/components/AuthModeSwitch'
 import { initialAuthForm } from '../features/auth/types'
 import type { AuthFormValues, AuthMode } from '../features/auth/types'
 import './AuthPage.css'
+import { registerUser } from '../shared/api/auth'
 
 export function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login')
@@ -32,7 +33,7 @@ export function AuthPage() {
     setMessage('')
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (!form.nickname.trim() || !form.password.trim()) {
@@ -46,13 +47,22 @@ export function AuthPage() {
         return
       }
 
-      if (form.password !== form.confirmPassword) {
+      if (form.password !== form.confirm_password) {
         setMessage('Passwords must match.')
         return
       }
     }
+    if (mode === 'login') {
+      setMessage('Login form is ready for backend integration.')
+      return
+    }
 
-    setMessage(mode === 'login' ? 'Welcome back.' : 'Account form is ready.')
+    try {
+      await registerUser(form)
+      setMessage('Account created.')
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Registration failed.')
+    }
   }
 
   return (

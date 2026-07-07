@@ -1,7 +1,7 @@
 ﻿import type { AuthFormValues } from '../../features/auth/types'
 
 export const registerUser = async (form: AuthFormValues): Promise<void> => {
-  const response = await fetch('/api/register', {
+  const response = await fetch('http://localhost:3000/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -51,6 +51,7 @@ describe('AuthService', () => {
             const input = {
                 nickname: 'validNickname',
                 password: 'validPassword123',
+                confirm_password: 'validPassword123',
                 email: 'NASTYA@MAIL.COM',
             };
             const createdUser: RegisteredUserDbType = {
@@ -81,6 +82,7 @@ describe('AuthService', () => {
             await expect(registerUser({
                 nickname: 'existingNickname',
                 password: 'validPassword123',
+                confirm_password: 'validPassword123',
                 email: 'existing@mail.com',
             })).rejects.toBeInstanceOf(UserAlreadyExistsError);
         });

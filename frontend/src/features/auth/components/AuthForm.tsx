@@ -1,4 +1,4 @@
-﻿import { Alert, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
+import { Alert, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
 import type { FormEvent } from 'react'
 import type { AuthFormValues, AuthMode } from '../types'
 
@@ -53,9 +53,9 @@ export function AuthForm({
           <PasswordInput
             label="Confirm password"
             autoComplete="new-password"
-            value={form.confirmPassword}
+            value={form.confirm_password}
             classNames={{ input: 'auth-input', label: 'auth-label', innerInput: 'auth-password-input' }}
-            onChange={(event) => onFieldChange('confirmPassword', event.target.value)}
+            onChange={(event) => onFieldChange('confirm_password', event.target.value)}
           />
         )}
 

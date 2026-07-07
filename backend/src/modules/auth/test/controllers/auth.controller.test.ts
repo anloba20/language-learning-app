@@ -39,6 +39,7 @@ describe('AuthController', () => {
             const input = {
                 nickname: 'validNickname',
                 password: 'validPassword123',
+                confirm_password: 'validPassword123',
                 email: 'nastjalo@mail.ru'
             };
 
@@ -81,6 +82,7 @@ describe('AuthController', () => {
             const input = {
                 nickname: 'existingNick',
                 password: 'validPassword123',
+                confirm_password: 'validPassword123',
                 email: 'nastjalo@mail.ru'
             };
 

@@ -4,12 +4,12 @@ export type AuthFormValues = {
   nickname: string
   email: string
   password: string
-  confirmPassword: string
+  confirm_password: string
 }
 
 export const initialAuthForm: AuthFormValues = {
   nickname: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  confirm_password: '',
 }
