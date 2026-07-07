@@ -1,14 +1,14 @@
 ﻿export type AuthMode = 'login' | 'register'
 
 export type AuthFormValues = {
-  name: string
+  nickname: string
   email: string
   password: string
   confirmPassword: string
 }
 
 export const initialAuthForm: AuthFormValues = {
-  name: '',
+  nickname: '',
   email: '',
   password: '',
   confirmPassword: '',

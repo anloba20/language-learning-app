@@ -1,4 +1,5 @@
-﻿import type { AuthMode } from '../types'
+﻿import { SegmentedControl } from '@mantine/core'
+import type { AuthMode } from '../types'
 
 type AuthModeSwitchProps = {
   mode: AuthMode
@@ -7,21 +8,18 @@ type AuthModeSwitchProps = {
 
 export function AuthModeSwitch({ mode, onChange }: AuthModeSwitchProps) {
   return (
-    <div className="mode-switch" aria-label="Authentication mode">
-      <button
-        type="button"
-        className={mode === 'login' ? 'active' : ''}
-        onClick={() => onChange('login')}
-      >
-        Sign in
-      </button>
-      <button
-        type="button"
-        className={mode === 'register' ? 'active' : ''}
-        onClick={() => onChange('register')}
-      >
-        Register
-      </button>
-    </div>
+    <SegmentedControl
+      aria-label="Authentication mode"
+      className="mode-switch"
+      fullWidth
+      radius="md"
+      size="md"
+      value={mode}
+      onChange={(value) => onChange(value as AuthMode)}
+      data={[
+        { label: 'Sign in', value: 'login' },
+        { label: 'Register', value: 'register' },
+      ]}
+    />
   )
 }

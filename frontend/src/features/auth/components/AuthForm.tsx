@@ -1,4 +1,5 @@
-﻿import type { FormEvent } from 'react'
+﻿import { Alert, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
+import type { FormEvent } from 'react'
 import type { AuthFormValues, AuthMode } from '../types'
 
 type AuthFormProps = {
@@ -20,55 +21,54 @@ export function AuthForm({
 }: AuthFormProps) {
   return (
     <form className="auth-form" onSubmit={onSubmit} noValidate>
-      {mode === 'register' && (
-        <label>
-          <span>Name</span>
-          <input
-            type="text"
-            autoComplete="name"
-            value={form.name}
-            onChange={(event) => onFieldChange('name', event.target.value)}
-          />
-        </label>
-      )}
-
-      <label>
-        <span>Email</span>
-        <input
-          type="email"
-          autoComplete="email"
-          value={form.email}
-          onChange={(event) => onFieldChange('email', event.target.value)}
+      <Stack gap="md">
+        <TextInput
+          label="Nickname"
+          autoComplete="username"
+          value={form.nickname}
+          classNames={{ input: 'auth-input', label: 'auth-label' }}
+          onChange={(event) => onFieldChange('nickname', event.target.value)}
         />
-      </label>
 
-      <label>
-        <span>Password</span>
-        <input
-          type="password"
+        {mode === 'register' && (
+          <TextInput
+            label="Email"
+            type="email"
+            autoComplete="email"
+            value={form.email}
+            classNames={{ input: 'auth-input', label: 'auth-label' }}
+            onChange={(event) => onFieldChange('email', event.target.value)}
+          />
+        )}
+
+        <PasswordInput
+          label="Password"
           autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
           value={form.password}
+          classNames={{ input: 'auth-input', label: 'auth-label', innerInput: 'auth-password-input' }}
           onChange={(event) => onFieldChange('password', event.target.value)}
         />
-      </label>
 
-      {mode === 'register' && (
-        <label>
-          <span>Confirm password</span>
-          <input
-            type="password"
+        {mode === 'register' && (
+          <PasswordInput
+            label="Confirm password"
             autoComplete="new-password"
             value={form.confirmPassword}
+            classNames={{ input: 'auth-input', label: 'auth-label', innerInput: 'auth-password-input' }}
             onChange={(event) => onFieldChange('confirmPassword', event.target.value)}
           />
-        </label>
-      )}
+        )}
 
-      {message && <p className="form-message">{message}</p>}
+        {message && (
+          <Alert className="form-message" radius="md">
+            {message}
+          </Alert>
+        )}
 
-      <button className="submit-button" type="submit">
-        {submitText}
-      </button>
+        <Button className="submit-button" type="submit" fullWidth size="md">
+          {submitText}
+        </Button>
+      </Stack>
     </form>
   )
 }
