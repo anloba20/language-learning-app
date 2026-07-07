@@ -1,4 +1,4 @@
-import { jwtSecret } from "../../../utils/config/env";
+import { jwtSecret } from "../../config/auth";
 import { AuthTokenPayload } from "./auth.types";
 import jwt from 'jsonwebtoken';
 
