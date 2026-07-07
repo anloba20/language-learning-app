@@ -1,12 +1,11 @@
 import type { Request, Response, NextFunction } from 'express';
-import { AuthTokenPayload } from './auth.types';
+import type { AuthTokenPayload } from './auth.types';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../../config/auth';
 
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.get('Authorization');
-    const userData = req.body;
     if (!authHeader) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -16,10 +15,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     try {
         const token = authHeader.split(' ')[1];
         const {role, userId}: AuthTokenPayload = jwt.verify(token, jwtSecret as string) as AuthTokenPayload;
-        req.body = { ...userData, userId, role };
+        req.user = { userId, role };
         next();
-    } catch (error) {
+    } catch {
         return res.status(401).json({ message: 'Unauthorized' });
     }
-   
+
 }
