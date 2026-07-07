@@ -1,4 +1,4 @@
-.auth-page {
+﻿.auth-page {
   min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
@@ -13,7 +13,7 @@
   padding: 64px;
   background:
     linear-gradient(135deg, rgba(35, 109, 104, 0.92), rgba(38, 86, 125, 0.9)),
-    url('./assets/hero.png') center / cover;
+    url('../assets/hero.png') center / cover;
   color: #ffffff;
 }
 
@@ -187,3 +187,4 @@
     border-top: 1px solid #dde3df;
   }
 }
+
