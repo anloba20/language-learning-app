@@ -16,3 +16,5 @@ export interface RegisteredUser {
 export type UserCredentials = RegisteredUserDbType & {
     password_hash: string;
 };
+
+export type UserProfileCredentials = RegisteredUserDbType;

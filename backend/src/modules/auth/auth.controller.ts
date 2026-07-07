@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { registerUser, validateLoginCredentials } from './auth.service';
+import { getUserProfile, registerUser, validateLoginCredentials } from './auth.service';
 import { loginSchema, registerSchema } from './auth.schema';
-import { InvalidCredentialsError, UserAlreadyExistsError } from './auth.errors';
+import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from './auth.errors';
 
 export const loginController = async (req:Request, res: Response) => {
     try {
@@ -35,6 +35,21 @@ export const registerController = async (req:Request, res: Response) => {
     }
 };
 
-export const profileController = (req:Request, res: Response) => {
-    res.send('Profile endpoint');
+export const profileController = async (req:Request, res: Response) => {
+    try {
+        const userId = req.user?.userId;
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        const userProfile = await getUserProfile(userId);
+        res.status(200).json(userProfile);
+    } catch (error: unknown) {
+        if (error instanceof UserNotFoundError) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        if (error instanceof InvalidCredentialsError) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        throw error;
+    }
 };

@@ -8,7 +8,7 @@ describe('AuthMiddleware', () => {
   const app = express();
 
   app.get('/protected', authMiddleware, (req, res) => {
-    res.json(req.body);
+    res.json(req.user);
   });
 
   it('should return 401 if Authorization header is missing', async () => {

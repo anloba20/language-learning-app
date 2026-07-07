@@ -1,16 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import request from "supertest";
 import express from 'express';
-import { registerUser, validateLoginCredentials } from "../../auth.service";
-import { loginController, registerController } from "../../auth.controller";
-import type { RegisteredUser } from "../../auth.types";
-import { InvalidCredentialsError, UserAlreadyExistsError } from "../../auth.errors";
+import { getUserProfile, registerUser, validateLoginCredentials } from "../../auth.service";
+import { loginController, profileController, registerController } from "../../auth.controller";
+import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
+import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
+import { authMiddleware } from "../../auth.middleware";
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from "../../../../config/auth";
+
 
 vi.mock('../../auth.service', () => ({
     registerUser: vi.fn(),
     validateLoginCredentials: vi.fn(),
-    generateAccessToken: vi.fn(),
+    getUserProfile: vi.fn()
 }));
 
 
@@ -18,6 +22,7 @@ const app = express();
 app.use(express.json());
 app.post('/auth/login', loginController);
 app.post('/auth/register', registerController);
+app.get('/auth/profile', authMiddleware, profileController);
 
 
 describe('AuthController', () => {
@@ -140,4 +145,65 @@ describe('AuthController', () => {
             expect(res.body).toEqual({ message: 'Invalid nickname or password' });
         });
     });
-});
+
+    describe('profileController', () => {
+        const getUserProfileMock = vi.mocked(getUserProfile);
+
+        beforeEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should return 200 and user profile for valid token', async () => {
+            const expectedProfile: UserProfileCredentials = {
+                id: '1',
+                nickname: 'validNickname',
+                email: 'validEmail@mail.com',
+                role: 'user',
+            };
+            const token = jwt.sign(
+                { userId: expectedProfile.id, role: expectedProfile.role },
+                jwtSecret,
+                { expiresIn: '1h' }
+            );
+            getUserProfileMock.mockResolvedValue(expectedProfile);
+
+            const res = await request(app)
+                .get('/auth/profile')
+                .set('Authorization', `Bearer ${token}`);
+
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(expectedProfile);
+            expect(getUserProfileMock).toHaveBeenCalledOnce();
+            expect(getUserProfileMock).toHaveBeenCalledWith(expectedProfile.id);
+        });
+
+        it('should return 401 if token is missing', async () => {
+            const res = await request(app)
+                .get('/auth/profile');
+            expect(res.status).toBe(401);
+            expect(getUserProfileMock).not.toHaveBeenCalled();
+        });
+
+        it('should return 401 if token is invalid', async () => {
+            const res = await request(app)
+                .get('/auth/profile')
+                .set('Authorization', 'Bearer invalid-token');
+            expect(res.status).toBe(401);
+            expect(getUserProfileMock).not.toHaveBeenCalled();
+        });
+
+        it('should return 404 if user is missing', async () => {
+            const token = jwt.sign(
+                { userId: '1', role: 'user' },
+                jwtSecret,
+                { expiresIn: '1h' }
+            );
+            getUserProfileMock.mockRejectedValue(new UserNotFoundError());
+            const res = await request(app)
+                .get('/auth/profile')
+                .set('Authorization', `Bearer ${token}`);
+            expect(res.status).toBe(404);
+            expect(getUserProfileMock).toHaveBeenCalledOnce();
+            expect(getUserProfileMock).toHaveBeenCalledWith('1');
+        });
+    });});
