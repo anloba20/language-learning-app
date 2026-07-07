@@ -1,5 +1,5 @@
 import type { Knex } from 'knex';
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } from './config/db';
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } from './src/config/db';
 
 const knexConfig: Knex.Config = {
   client: 'pg',
@@ -16,7 +16,7 @@ const knexConfig: Knex.Config = {
   },
   migrations: {
     tableName: 'knex_migrations',
-    directory: './db/migrations',
+    directory: './src/db/migrations',
   },
 };
 
