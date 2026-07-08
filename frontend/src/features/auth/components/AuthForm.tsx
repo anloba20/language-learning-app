@@ -21,7 +21,7 @@ export function AuthForm({
 }: AuthFormProps) {
   return (
     <form className="auth-form" onSubmit={onSubmit} noValidate>
-      <Stack gap="md">
+      <Stack gap={16}>
         <TextInput
           label="Nickname"
           autoComplete="username"
@@ -60,12 +60,12 @@ export function AuthForm({
         )}
 
         {message && (
-          <Alert className="form-message" radius="md">
+          <Alert classNames={{ root: 'form-message' }} radius="md">
             {message}
           </Alert>
         )}
 
-        <Button className="submit-button" type="submit" fullWidth size="md">
+        <Button classNames={{ root: 'submit-button' }} type="submit" fullWidth size="md">
           {submitText}
         </Button>
       </Stack>

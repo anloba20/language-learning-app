@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { AuthBrandPanel } from '../features/auth/components/AuthBrandPanel'
 import { AuthForm } from '../features/auth/components/AuthForm'
@@ -12,15 +12,9 @@ export function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login')
   const [form, setForm] = useState<AuthFormValues>(initialAuthForm)
   const [message, setMessage] = useState('')
+  const [selectedLanguage, setSelectedLanguage] = useState('RU')
 
-  const title = mode === 'login' ? 'Welcome back' : 'Create your account'
   const submitText = mode === 'login' ? 'Sign in' : 'Create account'
-
-  const helperText = useMemo(() => {
-    return mode === 'login'
-      ? 'Continue from your last game.'
-      : 'Start collecting points across Russian, Estonian, and English.'
-  }, [mode])
 
   function updateField(field: keyof AuthFormValues, value: string) {
     setForm((currentForm) => ({ ...currentForm, [field]: value }))
@@ -71,13 +65,25 @@ export function AuthPage() {
         <AuthBrandPanel />
 
         <section className="auth-panel" aria-labelledby="auth-title">
-          <AuthModeSwitch mode={mode} onChange={switchMode} />
-
-          <div className="auth-heading">
+          <div className="auth-panel-intro">
             <p className="auth-kicker">Language games</p>
-            <h2 id="auth-title">{title}</h2>
-            <p>{helperText}</p>
+            <h1 id="auth-title">Learn by playing</h1>
+            <div className="auth-languages" aria-label="Available languages">
+              {['RU', 'EST', 'ENG'].map((language) => (
+                <button
+                  key={language}
+                  type="button"
+                  className="auth-language-button"
+                  data-active={selectedLanguage === language || undefined}
+                  onClick={() => setSelectedLanguage(language)}
+                >
+                  {language}
+                </button>
+              ))}
+            </div>
           </div>
+
+          <AuthModeSwitch mode={mode} onChange={switchMode} />
 
           <AuthForm
             mode={mode}
