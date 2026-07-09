@@ -102,13 +102,13 @@
   line-height: 1;
   text-align: center;
   cursor: pointer;
-  font: inherit;
+  appearance: none;
+  font-family: inherit;
   transition:
     background 160ms ease,
     border-color 160ms ease,
     color 160ms ease;
 }
-
 
 .auth-language-button[data-active] {
   border-color: #cb51e4;

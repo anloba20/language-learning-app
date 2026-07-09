@@ -1,11 +1,10 @@
-import { Alert, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
+import { Button, PasswordInput, Stack, TextInput } from '@mantine/core'
 import type { FormEvent } from 'react'
 import type { AuthFormValues, AuthMode } from '../types'
 
 type AuthFormProps = {
   mode: AuthMode
   form: AuthFormValues
-  message: string
   submitText: string
   onFieldChange: (field: keyof AuthFormValues, value: string) => void
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
@@ -14,7 +13,6 @@ type AuthFormProps = {
 export function AuthForm({
   mode,
   form,
-  message,
   submitText,
   onFieldChange,
   onSubmit,
@@ -26,6 +24,7 @@ export function AuthForm({
           label="Nickname"
           autoComplete="username"
           value={form.nickname}
+          required
           classNames={{ input: 'auth-input', label: 'auth-label' }}
           onChange={(event) => onFieldChange('nickname', event.target.value)}
         />
@@ -35,7 +34,8 @@ export function AuthForm({
             label="Email"
             type="email"
             autoComplete="email"
-            value={form.email}
+            required
+            value={form.email ?? ''}
             classNames={{ input: 'auth-input', label: 'auth-label' }}
             onChange={(event) => onFieldChange('email', event.target.value)}
           />
@@ -45,6 +45,7 @@ export function AuthForm({
           label="Password"
           autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
           value={form.password}
+          required
           classNames={{ input: 'auth-input', label: 'auth-label', innerInput: 'auth-password-input' }}
           onChange={(event) => onFieldChange('password', event.target.value)}
         />
@@ -53,16 +54,11 @@ export function AuthForm({
           <PasswordInput
             label="Confirm password"
             autoComplete="new-password"
-            value={form.confirm_password}
+            required
+            value={form.confirm_password ?? ''}
             classNames={{ input: 'auth-input', label: 'auth-label', innerInput: 'auth-password-input' }}
             onChange={(event) => onFieldChange('confirm_password', event.target.value)}
           />
-        )}
-
-        {message && (
-          <Alert classNames={{ root: 'form-message' }} radius="md">
-            {message}
-          </Alert>
         )}
 
         <Button classNames={{ root: 'submit-button' }} type="submit" fullWidth size="md">
