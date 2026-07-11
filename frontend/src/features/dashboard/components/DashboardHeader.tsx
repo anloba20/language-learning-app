@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core'
+import catLogo from '../../../assets/cat-logo.png'
 import './DashboardHeader.css'
 
 type DashboardHeaderProps = {
@@ -9,7 +10,9 @@ export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
   return (
     <nav className="dashboard-navbar" aria-label="Dashboard navigation">
       <div className="dashboard-brand">
-        <span className="dashboard-brand-mark">LG</span>
+        <span className="dashboard-brand-mark">
+          <img className="dashboard-brand-logo" src={catLogo} alt="Language Games cat logo" />
+        </span>
         <div>
           <p className="dashboard-brand-title">Language Games</p>
           <p className="dashboard-brand-subtitle">Learn by playing</p>
