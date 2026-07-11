@@ -1,12 +1,13 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import catLogo from '../../../assets/cat-logo.png'
 import './DashboardHeader.css'
 
 const navLinks = [
-  { label: 'Games', to: '#games' },
-  { label: 'Progress', to: '#progress' },
-  { label: 'Profile', to: '#profile' },
-  { label: 'Logout', to: '#logout', isLogout: true },
+  { labelKey: 'navigation.games', to: '#games' },
+  { labelKey: 'navigation.progress', to: '#progress' },
+  { labelKey: 'navigation.profile', to: '#profile' },
+  { labelKey: 'navigation.logout', to: '#logout', isLogout: true },
 ]
 
 type DashboardHeaderProps = {
@@ -15,29 +16,30 @@ type DashboardHeaderProps = {
 
 export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
   const location = useLocation()
+  const { t } = useTranslation()
   const activeHash = location.hash || '#games'
 
   return (
-    <nav className="dashboard-navbar" aria-label="Dashboard navigation">
+    <nav className="dashboard-navbar" aria-label={t('navigation.ariaLabel')}>
       <div className="dashboard-brand">
         <span className="dashboard-brand-mark">
-          <img className="dashboard-brand-logo" src={catLogo} alt="Language Games cat logo" />
+          <img className="dashboard-brand-logo" src={catLogo} alt={t('app.catLogoAlt')} />
         </span>
         <div>
-          <p className="dashboard-brand-title">Language Games</p>
-          <p className="dashboard-brand-subtitle">Learn by playing</p>
+          <p className="dashboard-brand-title">{t('app.name')}</p>
+          <p className="dashboard-brand-subtitle">{t('app.tagline')}</p>
         </div>
       </div>
 
-      <div className="dashboard-nav-links" aria-label="Main sections">
+      <div className="dashboard-nav-links" aria-label={t('navigation.mainSectionsAriaLabel')}>
         {navLinks.map((link) => {
-          const isActive = activeHash === link.to
+          const isActive = !link.isLogout && activeHash === link.to
 
           return (
             <Link
               aria-current={isActive ? 'page' : undefined}
               className={isActive ? 'dashboard-nav-link dashboard-nav-link-active' : 'dashboard-nav-link'}
-              key={link.label}
+              key={link.labelKey}
               to={link.to}
               onClick={(event) => {
                 if (link.isLogout) {
@@ -46,7 +48,7 @@ export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
                 }
               }}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           )
         })}

@@ -3,6 +3,7 @@ import express from 'express';
 import request from "supertest";
 import { authMiddleware } from "../../auth.middleware";
 import { generateAccessToken } from "../../auth.service";
+import { authErrorCodes } from "../../auth.errors";
 
 describe('AuthMiddleware', () => {
   const app = express();
@@ -16,6 +17,7 @@ describe('AuthMiddleware', () => {
       .get('/protected');
 
     expect(response.status).toBe(401);
+    expect(response.body.code).toBe(authErrorCodes.unauthorized);
   });
 
   it('should return 401 if Authorization header does not start with Bearer', async () => {
@@ -24,6 +26,7 @@ describe('AuthMiddleware', () => {
       .set('Authorization', 'Invalid Token');
 
     expect(response.status).toBe(401);
+    expect(response.body.code).toBe(authErrorCodes.unauthorized);
   });
 
   it('should allow request with valid Authorization header', async () => {
@@ -49,5 +52,6 @@ describe('AuthMiddleware', () => {
       .set('Authorization', 'Bearer invalid_token');
 
     expect(response.status).toBe(401);
+    expect(response.body.code).toBe(authErrorCodes.unauthorized);
   });
 });

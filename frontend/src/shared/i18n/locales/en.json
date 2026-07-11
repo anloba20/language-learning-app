@@ -1,0 +1,194 @@
+{
+  "app": {
+    "name": "LingoPuh",
+    "tagline": "Learn by playing",
+    "brandAriaLabel": "Language learning app",
+    "catLogoAlt": "LingoPuh cat logo"
+  },
+  "navigation": {
+    "games": "Games",
+    "progress": "Progress",
+    "profile": "Profile",
+    "logout": "Logout",
+    "ariaLabel": "Dashboard navigation",
+    "mainSectionsAriaLabel": "Main sections"
+  },
+  "languages": {
+    "russian": "Russian",
+    "english": "English",
+    "estonian": "Estonian",
+    "german": "German",
+    "codes": {
+      "ru": "RU",
+      "et": "EST",
+      "en": "ENG",
+      "de": "GER"
+    }
+  },
+  "auth": {
+    "ariaLabel": "Authentication",
+    "availableLanguagesAriaLabel": "Available languages",
+    "modes": {
+      "ariaLabel": "Authentication mode",
+      "signIn": "Sign in",
+      "register": "Register"
+    },
+    "form": {
+      "nickname": "Nickname",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "submit": {
+      "signIn": "Sign in",
+      "createAccount": "Create account"
+    },
+    "notifications": {
+      "loginFailed": "Login failed",
+      "registrationFailed": "Registration failed",
+      "genericError": "Something went wrong. Try again."
+    },
+    "validation": {
+      "required": "{{field}} is required.",
+      "passwordsMustMatch": "Passwords must match."
+    },
+    "errors": {
+      "tokenMissing": "Authentication token is missing",
+      "loginFailed": "Login failed",
+      "registrationFailed": "Registration failed"
+    },
+    "serverErrors": {
+      "invalidCredentials": "Invalid nickname or password.",
+      "userAlreadyExists": "Nickname or email already exists.",
+      "validationFailed": "Check the form fields and try again.",
+      "unauthorized": "Please sign in again.",
+      "userNotFound": "User was not found."
+    }
+  },
+  "dashboard": {
+    "languageModal": {
+      "title": "Choose your languages",
+      "copy": "Tell us your native language and what language you want to learn first.",
+      "nativeLanguage": "Native language",
+      "nativeLanguagePlaceholder": "Choose native language",
+      "learningLanguage": "Language to learn",
+      "learningLanguagePlaceholder": "Choose language to learn",
+      "sameLanguageError": "Native language and learning language must be different.",
+      "continue": "Continue"
+    },
+    "summary": {
+      "ariaLabel": "Learning summary",
+      "kicker": "Today's practice",
+      "title": "Continue learning English",
+      "copy": "Russian to English - 8 words left in your current round",
+      "continueLabel": "Continue",
+      "continueTitle": "Word Match",
+      "continueMeta": "Vocabulary - Level 2",
+      "statsAriaLabel": "Current progress",
+      "stats": {
+        "points": "Points",
+        "words": "Words",
+        "streak": "Streak",
+        "streakValue": "4 days"
+      }
+    },
+    "lobby": {
+      "previousCategoryGames": "Previous {{category}} games",
+      "nextCategoryGames": "Next {{category}} games",
+      "categoryGamesAriaLabel": "{{category}} games",
+      "categoryControlsAriaLabel": "{{category}} controls"
+    },
+    "categories": {
+      "vocabulary": "Vocabulary",
+      "listening": "Listening",
+      "spelling": "Spelling",
+      "grammar": "Grammar"
+    }
+  },
+  "games": {
+    "wordMatch": {
+      "title": "Word Match",
+      "subtitle": "Pair words fast"
+    },
+    "memoryCards": {
+      "title": "Memory Cards",
+      "subtitle": "Remember translations"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Quick word review"
+    },
+    "speedTranslation": {
+      "title": "Speed Translation",
+      "subtitle": "Beat the timer"
+    },
+    "pictureWords": {
+      "title": "Picture Words",
+      "subtitle": "Learn by image"
+    },
+    "wordHunt": {
+      "title": "Word Hunt",
+      "subtitle": "Find hidden words"
+    },
+    "listenAndChoose": {
+      "title": "Listen & Choose",
+      "subtitle": "Pick the meaning"
+    },
+    "audioMatch": {
+      "title": "Audio Match",
+      "subtitle": "Match sound to word"
+    },
+    "soundSprint": {
+      "title": "Sound Sprint",
+      "subtitle": "React to phrases"
+    },
+    "phraseEcho": {
+      "title": "Phrase Echo",
+      "subtitle": "Repeat short lines"
+    },
+    "minimalPairs": {
+      "title": "Minimal Pairs",
+      "subtitle": "Hear tiny changes"
+    },
+    "typeTheWord": {
+      "title": "Type the Word",
+      "subtitle": "Write it correctly"
+    },
+    "missingLetters": {
+      "title": "Missing Letters",
+      "subtitle": "Fill the gaps"
+    },
+    "wordBuilder": {
+      "title": "Word Builder",
+      "subtitle": "Build from pieces"
+    },
+    "letterRush": {
+      "title": "Letter Rush",
+      "subtitle": "Choose the order"
+    },
+    "silentLetter": {
+      "title": "Silent Letter",
+      "subtitle": "Spot tricky words"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "subtitle": "Make clean phrases"
+    },
+    "chooseForm": {
+      "title": "Choose Form",
+      "subtitle": "Pick the right ending"
+    },
+    "fixThePhrase": {
+      "title": "Fix the Phrase",
+      "subtitle": "Repair mistakes"
+    },
+    "caseQuest": {
+      "title": "Case Quest",
+      "subtitle": "Practice structure"
+    },
+    "tinyDialogues": {
+      "title": "Tiny Dialogues",
+      "subtitle": "Complete replies"
+    }
+  }
+}

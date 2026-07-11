@@ -1,0 +1,194 @@
+{
+  "app": {
+    "name": "LingoPuh",
+    "tagline": "Lerne spielerisch",
+    "brandAriaLabel": "Sprachlern-App",
+    "catLogoAlt": "Language-Games-Logo mit Katze"
+  },
+  "navigation": {
+    "games": "Spiele",
+    "progress": "Fortschritt",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "ariaLabel": "Dashboard-Navigation",
+    "mainSectionsAriaLabel": "Hauptbereiche"
+  },
+  "languages": {
+    "russian": "Russisch",
+    "english": "Englisch",
+    "estonian": "Estnisch",
+    "german": "Deutsch",
+    "codes": {
+      "ru": "RU",
+      "et": "EST",
+      "en": "ENG",
+      "de": "GER"
+    }
+  },
+  "auth": {
+    "ariaLabel": "Authentifizierung",
+    "availableLanguagesAriaLabel": "Verfügbare Sprachen",
+    "modes": {
+      "ariaLabel": "Authentifizierungsmodus",
+      "signIn": "Anmelden",
+      "register": "Registrieren"
+    },
+    "form": {
+      "nickname": "Nickname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen"
+    },
+    "submit": {
+      "signIn": "Anmelden",
+      "createAccount": "Konto erstellen"
+    },
+    "notifications": {
+      "loginFailed": "Anmeldung fehlgeschlagen",
+      "registrationFailed": "Registrierung fehlgeschlagen",
+      "genericError": "Etwas ist schiefgelaufen. Versuche es erneut."
+    },
+    "validation": {
+      "required": "{{field}} ist erforderlich.",
+      "passwordsMustMatch": "Passwörter müssen übereinstimmen."
+    },
+    "errors": {
+      "tokenMissing": "Authentifizierungstoken fehlt",
+      "loginFailed": "Anmeldung fehlgeschlagen",
+      "registrationFailed": "Registrierung fehlgeschlagen"
+    },
+    "serverErrors": {
+      "invalidCredentials": "Ungültiger Nickname oder ungültiges Passwort.",
+      "userAlreadyExists": "Nickname oder E-Mail ist bereits vergeben.",
+      "validationFailed": "Prüfe die Formularfelder und versuche es erneut.",
+      "unauthorized": "Bitte melde dich erneut an.",
+      "userNotFound": "Benutzer wurde nicht gefunden."
+    }
+  },
+  "dashboard": {
+    "languageModal": {
+      "title": "Wähle deine Sprachen",
+      "copy": "Sag uns deine Muttersprache und welche Sprache du zuerst lernen möchtest.",
+      "nativeLanguage": "Muttersprache",
+      "nativeLanguagePlaceholder": "Muttersprache wählen",
+      "learningLanguage": "Sprache zum Lernen",
+      "learningLanguagePlaceholder": "Sprache zum Lernen wählen",
+      "sameLanguageError": "Muttersprache und Lernsprache müssen unterschiedlich sein.",
+      "continue": "Weiter"
+    },
+    "summary": {
+      "ariaLabel": "Lernübersicht",
+      "kicker": "Heutige Übung",
+      "title": "Weiter Englisch lernen",
+      "copy": "Russisch zu Englisch - noch 8 Wörter in deiner aktuellen Runde",
+      "continueLabel": "Weiter",
+      "continueTitle": "Word Match",
+      "continueMeta": "Wortschatz - Level 2",
+      "statsAriaLabel": "Aktueller Fortschritt",
+      "stats": {
+        "points": "Punkte",
+        "words": "Wörter",
+        "streak": "Serie",
+        "streakValue": "4 Tage"
+      }
+    },
+    "lobby": {
+      "previousCategoryGames": "Vorherige {{category}}-Spiele",
+      "nextCategoryGames": "Nächste {{category}}-Spiele",
+      "categoryGamesAriaLabel": "{{category}}-Spiele",
+      "categoryControlsAriaLabel": "{{category}}-Steuerung"
+    },
+    "categories": {
+      "vocabulary": "Wortschatz",
+      "listening": "Hören",
+      "spelling": "Rechtschreibung",
+      "grammar": "Grammatik"
+    }
+  },
+  "games": {
+    "wordMatch": {
+      "title": "Word Match",
+      "subtitle": "Wörter schnell verbinden"
+    },
+    "memoryCards": {
+      "title": "Memory Cards",
+      "subtitle": "Übersetzungen merken"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Wörter schnell wiederholen"
+    },
+    "speedTranslation": {
+      "title": "Speed Translation",
+      "subtitle": "Schlag den Timer"
+    },
+    "pictureWords": {
+      "title": "Picture Words",
+      "subtitle": "Mit Bildern lernen"
+    },
+    "wordHunt": {
+      "title": "Word Hunt",
+      "subtitle": "Versteckte Wörter finden"
+    },
+    "listenAndChoose": {
+      "title": "Listen & Choose",
+      "subtitle": "Bedeutung auswählen"
+    },
+    "audioMatch": {
+      "title": "Audio Match",
+      "subtitle": "Ton und Wort verbinden"
+    },
+    "soundSprint": {
+      "title": "Sound Sprint",
+      "subtitle": "Auf Phrasen reagieren"
+    },
+    "phraseEcho": {
+      "title": "Phrase Echo",
+      "subtitle": "Kurze Sätze wiederholen"
+    },
+    "minimalPairs": {
+      "title": "Minimal Pairs",
+      "subtitle": "Kleine Unterschiede hören"
+    },
+    "typeTheWord": {
+      "title": "Type the Word",
+      "subtitle": "Das Wort richtig schreiben"
+    },
+    "missingLetters": {
+      "title": "Missing Letters",
+      "subtitle": "Lücken ausfüllen"
+    },
+    "wordBuilder": {
+      "title": "Word Builder",
+      "subtitle": "Wörter aus Teilen bauen"
+    },
+    "letterRush": {
+      "title": "Letter Rush",
+      "subtitle": "Reihenfolge wählen"
+    },
+    "silentLetter": {
+      "title": "Silent Letter",
+      "subtitle": "Schwierige Wörter erkennen"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "subtitle": "Korrekte Sätze bauen"
+    },
+    "chooseForm": {
+      "title": "Choose Form",
+      "subtitle": "Die richtige Form wählen"
+    },
+    "fixThePhrase": {
+      "title": "Fix the Phrase",
+      "subtitle": "Fehler korrigieren"
+    },
+    "caseQuest": {
+      "title": "Case Quest",
+      "subtitle": "Struktur üben"
+    },
+    "tinyDialogues": {
+      "title": "Tiny Dialogues",
+      "subtitle": "Antworten ergänzen"
+    }
+  }
+}

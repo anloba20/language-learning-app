@@ -1,95 +1,97 @@
+import { useTranslation } from 'react-i18next'
 import './GameCategoriesMenu.css'
 
 type LobbyGame = {
-  title: string
-  subtitle: string
+  titleKey: string
+  subtitleKey: string
   accent: 'pink' | 'violet' | 'blue' | 'green' | 'orange' | 'rose'
-  tag: string
 }
 
 type LobbyCategory = {
   value: string
-  label: string
+  labelKey: string
   games: LobbyGame[]
 }
 
 const lobbyCategories: LobbyCategory[] = [
   {
     value: 'vocabulary',
-    label: 'Vocabulary',
+    labelKey: 'dashboard.categories.vocabulary',
     games: [
-      { title: 'Word Match', subtitle: 'Pair words fast', accent: 'violet', tag: 'WM' },
-      { title: 'Memory Cards', subtitle: 'Remember translations', accent: 'pink', tag: 'MC' },
-      { title: 'Flashcards', subtitle: 'Quick word review', accent: 'blue', tag: 'FC' },
-      { title: 'Speed Translation', subtitle: 'Beat the timer', accent: 'green', tag: 'ST' },
-      { title: 'Picture Words', subtitle: 'Learn by image', accent: 'rose', tag: 'PW' },
-      { title: 'Word Hunt', subtitle: 'Find hidden words', accent: 'orange', tag: 'WH' },
+      { titleKey: 'games.wordMatch.title', subtitleKey: 'games.wordMatch.subtitle', accent: 'violet' },
+      { titleKey: 'games.memoryCards.title', subtitleKey: 'games.memoryCards.subtitle', accent: 'pink' },
+      { titleKey: 'games.flashcards.title', subtitleKey: 'games.flashcards.subtitle', accent: 'blue' },
+      { titleKey: 'games.speedTranslation.title', subtitleKey: 'games.speedTranslation.subtitle', accent: 'green' },
+      { titleKey: 'games.pictureWords.title', subtitleKey: 'games.pictureWords.subtitle', accent: 'rose' },
+      { titleKey: 'games.wordHunt.title', subtitleKey: 'games.wordHunt.subtitle', accent: 'orange' },
     ],
   },
   {
     value: 'listening',
-    label: 'Listening',
+    labelKey: 'dashboard.categories.listening',
     games: [
-      { title: 'Listen & Choose', subtitle: 'Pick the meaning', accent: 'blue', tag: 'LC' },
-      { title: 'Audio Match', subtitle: 'Match sound to word', accent: 'violet', tag: 'AM' },
-      { title: 'Sound Sprint', subtitle: 'React to phrases', accent: 'green', tag: 'SS' },
-      { title: 'Phrase Echo', subtitle: 'Repeat short lines', accent: 'pink', tag: 'PE' },
-      { title: 'Minimal Pairs', subtitle: 'Hear tiny changes', accent: 'rose', tag: 'MP' },
+      { titleKey: 'games.listenAndChoose.title', subtitleKey: 'games.listenAndChoose.subtitle', accent: 'blue' },
+      { titleKey: 'games.audioMatch.title', subtitleKey: 'games.audioMatch.subtitle', accent: 'violet' },
+      { titleKey: 'games.soundSprint.title', subtitleKey: 'games.soundSprint.subtitle', accent: 'green' },
+      { titleKey: 'games.phraseEcho.title', subtitleKey: 'games.phraseEcho.subtitle', accent: 'pink' },
+      { titleKey: 'games.minimalPairs.title', subtitleKey: 'games.minimalPairs.subtitle', accent: 'rose' },
     ],
   },
   {
     value: 'spelling',
-    label: 'Spelling',
+    labelKey: 'dashboard.categories.spelling',
     games: [
-      { title: 'Type the Word', subtitle: 'Write it correctly', accent: 'green', tag: 'TW' },
-      { title: 'Missing Letters', subtitle: 'Fill the gaps', accent: 'orange', tag: 'ML' },
-      { title: 'Word Builder', subtitle: 'Build from pieces', accent: 'violet', tag: 'WB' },
-      { title: 'Letter Rush', subtitle: 'Choose the order', accent: 'blue', tag: 'LR' },
-      { title: 'Silent Letter', subtitle: 'Spot tricky words', accent: 'pink', tag: 'SL' },
+      { titleKey: 'games.typeTheWord.title', subtitleKey: 'games.typeTheWord.subtitle', accent: 'green' },
+      { titleKey: 'games.missingLetters.title', subtitleKey: 'games.missingLetters.subtitle', accent: 'orange' },
+      { titleKey: 'games.wordBuilder.title', subtitleKey: 'games.wordBuilder.subtitle', accent: 'violet' },
+      { titleKey: 'games.letterRush.title', subtitleKey: 'games.letterRush.subtitle', accent: 'blue' },
+      { titleKey: 'games.silentLetter.title', subtitleKey: 'games.silentLetter.subtitle', accent: 'pink' },
     ],
   },
   {
     value: 'grammar',
-    label: 'Grammar',
+    labelKey: 'dashboard.categories.grammar',
     games: [
-      { title: 'Sentence Builder', subtitle: 'Make clean phrases', accent: 'rose', tag: 'SB' },
-      { title: 'Choose Form', subtitle: 'Pick the right ending', accent: 'violet', tag: 'CF' },
-      { title: 'Fix the Phrase', subtitle: 'Repair mistakes', accent: 'orange', tag: 'FP' },
-      { title: 'Case Quest', subtitle: 'Practice structure', accent: 'blue', tag: 'CQ' },
-      { title: 'Tiny Dialogues', subtitle: 'Complete replies', accent: 'green', tag: 'TD' },
+      { titleKey: 'games.sentenceBuilder.title', subtitleKey: 'games.sentenceBuilder.subtitle', accent: 'rose' },
+      { titleKey: 'games.chooseForm.title', subtitleKey: 'games.chooseForm.subtitle', accent: 'violet' },
+      { titleKey: 'games.fixThePhrase.title', subtitleKey: 'games.fixThePhrase.subtitle', accent: 'orange' },
+      { titleKey: 'games.caseQuest.title', subtitleKey: 'games.caseQuest.subtitle', accent: 'blue' },
+      { titleKey: 'games.tinyDialogues.title', subtitleKey: 'games.tinyDialogues.subtitle', accent: 'green' },
     ],
   },
 ]
 
 const dashboardStats = [
-  { label: 'Points', value: '840' },
-  { label: 'Words', value: '36' },
-  { label: 'Streak', value: '4 days' },
+  { labelKey: 'dashboard.summary.stats.points', value: '840' },
+  { labelKey: 'dashboard.summary.stats.words', value: '36' },
+  { labelKey: 'dashboard.summary.stats.streak', valueKey: 'dashboard.summary.stats.streakValue' },
 ]
 
 export function GameCategoriesMenu() {
+  const { t } = useTranslation()
+
   return (
     <section className="dashboard-content" id="games" aria-labelledby="game-lobby-title">
-      <div className="dashboard-summary" aria-label="Learning summary">
+      <div className="dashboard-summary" aria-label={t('dashboard.summary.ariaLabel')}>
         <div className="dashboard-summary-main">
-          <p className="dashboard-summary-kicker">Today&apos;s practice</p>
+          <p className="dashboard-summary-kicker">{t('dashboard.summary.kicker')}</p>
           <h2 className="dashboard-summary-title" id="game-lobby-title">
-            Continue learning English
+            {t('dashboard.summary.title')}
           </h2>
-          <p className="dashboard-summary-copy">Russian to English - 8 words left in your current round</p>
+          <p className="dashboard-summary-copy">{t('dashboard.summary.copy')}</p>
         </div>
 
         <button className="continue-card" type="button">
-          <span className="continue-card-label">Continue</span>
-          <span className="continue-card-title">Word Match</span>
-          <span className="continue-card-meta">Vocabulary - Level 2</span>
+          <span className="continue-card-label">{t('dashboard.summary.continueLabel')}</span>
+          <span className="continue-card-title">{t('dashboard.summary.continueTitle')}</span>
+          <span className="continue-card-meta">{t('dashboard.summary.continueMeta')}</span>
         </button>
 
-        <div className="dashboard-stats" aria-label="Current progress">
+        <div className="dashboard-stats" aria-label={t('dashboard.summary.statsAriaLabel')}>
           {dashboardStats.map((stat) => (
-            <div className="dashboard-stat" key={stat.label}>
-              <span className="dashboard-stat-value">{stat.value}</span>
-              <span className="dashboard-stat-label">{stat.label}</span>
+            <div className="dashboard-stat" key={stat.labelKey}>
+              <span className="dashboard-stat-value">{'valueKey' in stat ? t(stat.valueKey) : stat.value}</span>
+              <span className="dashboard-stat-label">{t(stat.labelKey)}</span>
             </div>
           ))}
         </div>
@@ -97,36 +99,55 @@ export function GameCategoriesMenu() {
 
       <div className="game-lobby">
         <div className="lobby-categories">
-          {lobbyCategories.map((category) => (
-            <section className="lobby-category" key={category.value} aria-labelledby={`${category.value}-title`}>
-              <div className="lobby-category-header">
-                <div className="lobby-category-title-wrap">
-                  <h3 className="lobby-category-title" id={`${category.value}-title`}>
-                    {category.label}
-                  </h3>
+          {lobbyCategories.map((category) => {
+            const categoryLabel = t(category.labelKey)
+
+            return (
+              <section className="lobby-category" key={category.value} aria-labelledby={`${category.value}-title`}>
+                <div className="lobby-category-header">
+                  <div className="lobby-category-title-wrap">
+                    <h3 className="lobby-category-title" id={`${category.value}-title`}>
+                      {categoryLabel}
+                    </h3>
+                  </div>
+
+                  <div className="lobby-category-actions" aria-label={t('dashboard.lobby.categoryControlsAriaLabel', { category: categoryLabel })}>
+                    <span className="lobby-category-count">{category.games.length}</span>
+                    <button
+                      className="lobby-arrow"
+                      type="button"
+                      aria-label={t('dashboard.lobby.previousCategoryGames', { category: categoryLabel })}
+                    >
+                      {'<'}
+                    </button>
+                    <button
+                      className="lobby-arrow"
+                      type="button"
+                      aria-label={t('dashboard.lobby.nextCategoryGames', { category: categoryLabel })}
+                    >
+                      {'>'}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="lobby-category-actions" aria-label={`${category.label} controls`}>
-                  <span className="lobby-category-count">{category.games.length}</span>
-                  <button className="lobby-arrow" type="button" aria-label={`Previous ${category.label} games`}>
-                    {'<'}
-                  </button>
-                  <button className="lobby-arrow" type="button" aria-label={`Next ${category.label} games`}>
-                    {'>'}
-                  </button>
+                <div
+                  className="lobby-game-row"
+                  aria-label={t('dashboard.lobby.categoryGamesAriaLabel', { category: categoryLabel })}
+                >
+                  {category.games.map((game) => (
+                    <button
+                      className={`lobby-game-card lobby-game-card-${game.accent}`}
+                      type="button"
+                      key={game.titleKey}
+                    >
+                      <span className="lobby-game-title">{t(game.titleKey)}</span>
+                      <span className="lobby-game-subtitle">{t(game.subtitleKey)}</span>
+                    </button>
+                  ))}
                 </div>
-              </div>
-
-              <div className="lobby-game-row" aria-label={`${category.label} games`}>
-                {category.games.map((game) => (
-                  <button className={`lobby-game-card lobby-game-card-${game.accent}`} type="button" key={game.title}>
-                    <span className="lobby-game-title">{game.title}</span>
-                    <span className="lobby-game-subtitle">{game.subtitle}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
-          ))}
+              </section>
+            )
+          })}
         </div>
       </div>
     </section>

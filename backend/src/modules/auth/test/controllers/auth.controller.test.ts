@@ -4,7 +4,7 @@ import express from 'express';
 import { getUserProfile, registerUser, validateLoginCredentials } from "../../auth.service";
 import { loginController, profileController, registerController } from "../../auth.controller";
 import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
-import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
+import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
 import { authMiddleware } from "../../auth.middleware";
 import jwt from 'jsonwebtoken';
@@ -76,6 +76,7 @@ describe('AuthController', () => {
                 .post('/auth/register')
                 .send(input);
             expect(res.status).toBe(400);
+            expect(res.body.code).toBe(authErrorCodes.validationFailed);
         });
 
         it('should return 409 if user already exists', async () => {
@@ -92,7 +93,10 @@ describe('AuthController', () => {
                 .post('/auth/register')
                 .send(input);
             expect(res.status).toBe(409);
-            expect(res.body).toEqual({ message: 'Nickname or email already exists' });
+            expect(res.body).toEqual({
+                code: authErrorCodes.userAlreadyExists,
+                message: 'Nickname or email already exists',
+            });
         });
     });
 
@@ -131,6 +135,7 @@ describe('AuthController', () => {
                 .post('/auth/login')
                 .send(input);
             expect(res.status).toBe(400);
+            expect(res.body.code).toBe(authErrorCodes.validationFailed);
             expect(validateLoginCredentialsMock).not.toHaveBeenCalled();
         });
 
@@ -144,7 +149,10 @@ describe('AuthController', () => {
                 .post('/auth/login')
                 .send(input);
             expect(res.status).toBe(401);
-            expect(res.body).toEqual({ message: 'Invalid nickname or password' });
+            expect(res.body).toEqual({
+                code: authErrorCodes.invalidCredentials,
+                message: 'Invalid nickname or password',
+            });
         });
     });
 
@@ -208,4 +216,5 @@ describe('AuthController', () => {
             expect(getUserProfileMock).toHaveBeenCalledOnce();
             expect(getUserProfileMock).toHaveBeenCalledWith('1');
         });
-    });});
+    });
+});

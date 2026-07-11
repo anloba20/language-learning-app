@@ -1,15 +1,12 @@
 import { Button, Modal, Select, Stack } from '@mantine/core'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import './DashboardLanguageModal.css'
 
 const LANGUAGE_PREFERENCES_STORAGE_KEY = 'language-preferences'
 
-const languageOptions = [
-  { value: 'russian', label: 'Russian' },
-  { value: 'english', label: 'English' },
-  { value: 'estonian', label: 'Estonian' },
-  { value: 'german', label: 'German' },
-]
+const languageValues = ['russian', 'english', 'estonian', 'german'] as const
+
 
 type LanguagePreferences = {
   nativeLanguage: string
@@ -40,6 +37,7 @@ function getStoredLanguagePreferences(): LanguagePreferences | null {
 }
 
 export function DashboardLanguageModal() {
+  const { t } = useTranslation()
   const [storedLanguagePreferences] = useState(() => getStoredLanguagePreferences())
   const [nativeLanguage, setNativeLanguage] = useState<string | null>(
     storedLanguagePreferences?.nativeLanguage ?? null,
@@ -49,6 +47,10 @@ export function DashboardLanguageModal() {
   )
   const [isOpen, setIsOpen] = useState(!storedLanguagePreferences)
 
+  const languageOptions = languageValues.map((language) => ({
+    value: language,
+    label: t(`languages.${language}`),
+  }))
   const nativeLanguageOptions = languageOptions.filter((language) => language.value !== learningLanguage)
   const learningLanguageOptions = languageOptions.filter((language) => language.value !== nativeLanguage)
   const hasSameLanguages = Boolean(nativeLanguage && learningLanguage && nativeLanguage === learningLanguage)
@@ -70,7 +72,7 @@ export function DashboardLanguageModal() {
     <Modal
       opened={isOpen}
       onClose={() => undefined}
-      title="Choose your languages"
+      title={t('dashboard.languageModal.title')}
       centered
       closeOnClickOutside={false}
       closeOnEscape={false}
@@ -83,13 +85,11 @@ export function DashboardLanguageModal() {
       }}
     >
       <Stack gap={18}>
-        <p className="language-modal-copy">
-          Tell us your native language and what language you want to learn first.
-        </p>
+        <p className="language-modal-copy">{t('dashboard.languageModal.copy')}</p>
 
         <Select
-          label="Native language"
-          placeholder="Choose native language"
+          label={t('dashboard.languageModal.nativeLanguage')}
+          placeholder={t('dashboard.languageModal.nativeLanguagePlaceholder')}
           data={nativeLanguageOptions}
           value={nativeLanguage}
           allowDeselect={false}
@@ -103,8 +103,8 @@ export function DashboardLanguageModal() {
         />
 
         <Select
-          label="Language to learn"
-          placeholder="Choose language to learn"
+          label={t('dashboard.languageModal.learningLanguage')}
+          placeholder={t('dashboard.languageModal.learningLanguagePlaceholder')}
           data={learningLanguageOptions}
           value={learningLanguage}
           allowDeselect={false}
@@ -117,9 +117,7 @@ export function DashboardLanguageModal() {
           onChange={(value) => setLearningLanguage(typeof value === 'string' ? value : null)}
         />
 
-        {hasSameLanguages && (
-          <p className="language-modal-error">Native language and learning language must be different.</p>
-        )}
+        {hasSameLanguages && <p className="language-modal-error">{t('dashboard.languageModal.sameLanguageError')}</p>}
 
         <Button
           fullWidth
@@ -127,7 +125,7 @@ export function DashboardLanguageModal() {
           classNames={{ root: 'language-modal-submit' }}
           onClick={handleSaveLanguagePreferences}
         >
-          Continue
+          {t('dashboard.languageModal.continue')}
         </Button>
       </Stack>
     </Modal>

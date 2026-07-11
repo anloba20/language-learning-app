@@ -1,0 +1,194 @@
+{
+  "app": {
+    "name": "LingoPuh",
+    "tagline": "Учись через игру",
+    "brandAriaLabel": "Приложение для изучения языков",
+    "catLogoAlt": "Логотип LingoPuh с котом"
+  },
+  "navigation": {
+    "games": "Игры",
+    "progress": "Прогресс",
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "ariaLabel": "Навигация дашборда",
+    "mainSectionsAriaLabel": "Основные разделы"
+  },
+  "languages": {
+    "russian": "Русский",
+    "english": "Английский",
+    "estonian": "Эстонский",
+    "german": "Немецкий",
+    "codes": {
+      "ru": "RU",
+      "et": "EST",
+      "en": "ENG",
+      "de": "GER"
+    }
+  },
+  "auth": {
+    "ariaLabel": "Авторизация",
+    "availableLanguagesAriaLabel": "Доступные языки",
+    "modes": {
+      "ariaLabel": "Режим авторизации",
+      "signIn": "Войти",
+      "register": "Регистрация"
+    },
+    "form": {
+      "nickname": "Никнейм",
+      "email": "Email",
+      "password": "Пароль",
+      "confirmPassword": "Повторите пароль"
+    },
+    "submit": {
+      "signIn": "Войти",
+      "createAccount": "Создать аккаунт"
+    },
+    "notifications": {
+      "loginFailed": "Не удалось войти",
+      "registrationFailed": "Не удалось зарегистрироваться",
+      "genericError": "Что-то пошло не так. Попробуйте ещё раз."
+    },
+    "validation": {
+      "required": "Поле {{field}} обязательно.",
+      "passwordsMustMatch": "Пароли должны совпадать."
+    },
+    "errors": {
+      "tokenMissing": "Токен авторизации отсутствует",
+      "loginFailed": "Не удалось войти",
+      "registrationFailed": "Не удалось зарегистрироваться"
+    },
+    "serverErrors": {
+      "invalidCredentials": "Неверный никнейм или пароль.",
+      "userAlreadyExists": "Никнейм или email уже занят.",
+      "validationFailed": "Проверь поля формы и попробуй ещё раз.",
+      "unauthorized": "Пожалуйста, войди в аккаунт ещё раз.",
+      "userNotFound": "Пользователь не найден."
+    }
+  },
+  "dashboard": {
+    "languageModal": {
+      "title": "Выберите языки",
+      "copy": "Укажите родной язык и язык, который хотите изучать первым.",
+      "nativeLanguage": "Родной язык",
+      "nativeLanguagePlaceholder": "Выберите родной язык",
+      "learningLanguage": "Язык для изучения",
+      "learningLanguagePlaceholder": "Выберите язык для изучения",
+      "sameLanguageError": "Родной язык и язык для изучения должны отличаться.",
+      "continue": "Продолжить"
+    },
+    "summary": {
+      "ariaLabel": "Сводка обучения",
+      "kicker": "Практика сегодня",
+      "title": "Продолжить изучать английский",
+      "copy": "С русского на английский - 8 слов осталось в текущем раунде",
+      "continueLabel": "Продолжить",
+      "continueTitle": "Word Match",
+      "continueMeta": "Словарь - Уровень 2",
+      "statsAriaLabel": "Текущий прогресс",
+      "stats": {
+        "points": "Очки",
+        "words": "Слова",
+        "streak": "Серия",
+        "streakValue": "4 дня"
+      }
+    },
+    "lobby": {
+      "previousCategoryGames": "Предыдущие игры категории {{category}}",
+      "nextCategoryGames": "Следующие игры категории {{category}}",
+      "categoryGamesAriaLabel": "Игры категории {{category}}",
+      "categoryControlsAriaLabel": "Управление категорией {{category}}"
+    },
+    "categories": {
+      "vocabulary": "Словарь",
+      "listening": "Аудирование",
+      "spelling": "Правописание",
+      "grammar": "Грамматика"
+    }
+  },
+  "games": {
+    "wordMatch": {
+      "title": "Word Match",
+      "subtitle": "Быстро соединяй слова"
+    },
+    "memoryCards": {
+      "title": "Memory Cards",
+      "subtitle": "Запоминай переводы"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Быстро повторяй слова"
+    },
+    "speedTranslation": {
+      "title": "Speed Translation",
+      "subtitle": "Успей до таймера"
+    },
+    "pictureWords": {
+      "title": "Picture Words",
+      "subtitle": "Учи через картинки"
+    },
+    "wordHunt": {
+      "title": "Word Hunt",
+      "subtitle": "Ищи спрятанные слова"
+    },
+    "listenAndChoose": {
+      "title": "Listen & Choose",
+      "subtitle": "Выбери значение"
+    },
+    "audioMatch": {
+      "title": "Audio Match",
+      "subtitle": "Соедини звук и слово"
+    },
+    "soundSprint": {
+      "title": "Sound Sprint",
+      "subtitle": "Реагируй на фразы"
+    },
+    "phraseEcho": {
+      "title": "Phrase Echo",
+      "subtitle": "Повторяй короткие фразы"
+    },
+    "minimalPairs": {
+      "title": "Minimal Pairs",
+      "subtitle": "Слышь маленькие различия"
+    },
+    "typeTheWord": {
+      "title": "Type the Word",
+      "subtitle": "Напиши слово правильно"
+    },
+    "missingLetters": {
+      "title": "Missing Letters",
+      "subtitle": "Заполни пропуски"
+    },
+    "wordBuilder": {
+      "title": "Word Builder",
+      "subtitle": "Собирай слова из частей"
+    },
+    "letterRush": {
+      "title": "Letter Rush",
+      "subtitle": "Выбери порядок букв"
+    },
+    "silentLetter": {
+      "title": "Silent Letter",
+      "subtitle": "Найди сложные слова"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "subtitle": "Собирай правильные фразы"
+    },
+    "chooseForm": {
+      "title": "Choose Form",
+      "subtitle": "Выбери правильную форму"
+    },
+    "fixThePhrase": {
+      "title": "Fix the Phrase",
+      "subtitle": "Исправляй ошибки"
+    },
+    "caseQuest": {
+      "title": "Case Quest",
+      "subtitle": "Тренируй структуру"
+    },
+    "tinyDialogues": {
+      "title": "Tiny Dialogues",
+      "subtitle": "Дополняй ответы"
+    }
+  }
+}
