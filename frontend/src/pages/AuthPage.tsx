@@ -4,6 +4,7 @@ import type { FormEvent } from 'react'
 import { AuthBrandPanel } from '../features/auth/components/AuthBrandPanel'
 import { AuthForm } from '../features/auth/components/AuthForm'
 import { AuthModeSwitch } from '../features/auth/components/AuthModeSwitch'
+import { useAuth } from '../features/auth/auth.hooks'
 import type { AuthFormValues, AuthMode } from '../features/auth/types'
 import './AuthPage.css'
 import { loginUser, registerUser } from '../shared/api/auth'
@@ -28,6 +29,7 @@ export function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login')
   const [form, setForm] = useState<AuthFormValues>(() => createInitialAuthForm('login'))
   const [selectedLanguage, setSelectedLanguage] = useState('RU')
+  const { login } = useAuth()
 
   const submitText = mode === 'login' ? 'Sign in' : 'Create account'
   const authHandler = {
@@ -70,9 +72,9 @@ export function AuthPage() {
     }
 
     try {
-      await authHandler[mode](form)
+      const token = await authHandler[mode](form)
+      login(token)
     } catch (error) {
-      console.log('error', error)
       notifications.show({
         title: mode === 'login' ? 'Login failed' : 'Registration failed',
         message: error instanceof Error ? error.message : 'Something went wrong. Try again.',
