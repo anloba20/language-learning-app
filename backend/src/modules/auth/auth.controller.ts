@@ -1,15 +1,11 @@
 import type { Request, Response } from 'express';
 import { getUserProfile, registerUser, validateLoginCredentials } from './auth.service';
-import { loginSchema, registerSchema } from './auth.schema';
+import { registerSchema } from './auth.schema';
 import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from './auth.errors';
 
 export const loginController = async (req:Request, res: Response) => {
     try {
-        const result = loginSchema.safeParse(req.body);
-        if (!result.success) {
-            return res.status(400).json({ errors: result.error.issues });
-        }
-        const token = await validateLoginCredentials(result.data);
+        const token = await validateLoginCredentials(req.body);
         res.json({ token });
     } catch (error: unknown) {
         if (error instanceof InvalidCredentialsError) {
