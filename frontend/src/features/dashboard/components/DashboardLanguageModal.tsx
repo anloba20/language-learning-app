@@ -5,7 +5,7 @@ import './DashboardLanguageModal.css'
 
 const LANGUAGE_PREFERENCES_STORAGE_KEY = 'language-preferences'
 
-const languageValues = ['russian', 'english', 'estonian', 'german'] as const
+const languageValues = ['russian', 'english', 'estonian', 'german', 'norwegian'] as const
 
 
 type LanguagePreferences = {

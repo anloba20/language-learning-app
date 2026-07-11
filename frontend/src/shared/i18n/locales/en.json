@@ -22,8 +22,10 @@
       "ru": "RU",
       "et": "EST",
       "en": "ENG",
-      "de": "GER"
-    }
+      "de": "GER",
+      "no": "NOR"
+    },
+    "norwegian": "Norwegian"
   },
   "auth": {
     "ariaLabel": "Authentication",

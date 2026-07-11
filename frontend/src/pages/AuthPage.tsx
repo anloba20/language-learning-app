@@ -8,7 +8,7 @@ import { AuthModeSwitch } from '../features/auth/components/AuthModeSwitch'
 import { useAuth } from '../features/auth/auth.hooks'
 import type { AuthFormValues, AuthMode } from '../features/auth/types'
 import { loginUser, registerUser } from '../shared/api/auth'
-import { UI_LANGUAGE_STORAGE_KEY, uiLanguages } from '../shared/i18n'
+import { changeUiLanguage, uiLanguages } from '../shared/i18n'
 import './AuthPage.css'
 
 const authFieldTranslationKeys: Record<keyof AuthFormValues, string> = {
@@ -66,11 +66,6 @@ export function AuthPage() {
       }
     }
     return null
-  }
-
-  function changeUiLanguage(language: string) {
-    localStorage.setItem(UI_LANGUAGE_STORAGE_KEY, language)
-    i18n.changeLanguage(language)
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
