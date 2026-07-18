@@ -1,3 +1,5 @@
+[![CI](https://github.com/anloba20/language-learning-app/actions/workflows/ci.yml/badge.svg)](https://github.com/anloba20/language-learning-app/actions/workflows/ci.yml)
+
 # Language Learning App
 
 A web application for learning languages through simple games.
