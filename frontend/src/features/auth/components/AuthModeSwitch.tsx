@@ -1,4 +1,5 @@
 import { SegmentedControl } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 import type { AuthMode } from '../types'
 
 type AuthModeSwitchProps = {
@@ -7,9 +8,11 @@ type AuthModeSwitchProps = {
 }
 
 export function AuthModeSwitch({ mode, onChange }: AuthModeSwitchProps) {
+  const { t } = useTranslation()
+
   return (
     <SegmentedControl
-      aria-label="Authentication mode"
+      aria-label={t('auth.modes.ariaLabel')}
       className="mode-switch"
       classNames={{
         control: 'mode-switch-control',
@@ -22,8 +25,8 @@ export function AuthModeSwitch({ mode, onChange }: AuthModeSwitchProps) {
       value={mode}
       onChange={(value) => onChange(value as AuthMode)}
       data={[
-        { label: 'Sign in', value: 'login' },
-        { label: 'Register', value: 'register' },
+        { label: t('auth.modes.signIn'), value: 'login' },
+        { label: t('auth.modes.register'), value: 'register' },
       ]}
     />
   )

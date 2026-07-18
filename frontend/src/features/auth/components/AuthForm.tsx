@@ -1,5 +1,6 @@
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core'
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { AuthFormValues, AuthMode } from '../types'
 
 type AuthFormProps = {
@@ -17,11 +18,13 @@ export function AuthForm({
   onFieldChange,
   onSubmit,
 }: AuthFormProps) {
+  const { t } = useTranslation()
+
   return (
     <form className="auth-form" onSubmit={onSubmit} noValidate>
       <Stack gap={16}>
         <TextInput
-          label="Nickname"
+          label={t('auth.form.nickname')}
           autoComplete="username"
           value={form.nickname}
           required
@@ -31,7 +34,7 @@ export function AuthForm({
 
         {mode === 'register' && (
           <TextInput
-            label="Email"
+            label={t('auth.form.email')}
             type="email"
             autoComplete="email"
             required
@@ -42,7 +45,7 @@ export function AuthForm({
         )}
 
         <PasswordInput
-          label="Password"
+          label={t('auth.form.password')}
           autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
           value={form.password}
           required
@@ -52,7 +55,7 @@ export function AuthForm({
 
         {mode === 'register' && (
           <PasswordInput
-            label="Confirm password"
+            label={t('auth.form.confirmPassword')}
             autoComplete="new-password"
             required
             value={form.confirm_password ?? ''}

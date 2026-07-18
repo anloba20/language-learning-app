@@ -1,3 +1,7 @@
+import { useTranslation } from 'react-i18next'
+
 export function AuthBrandPanel() {
-  return <section className="brand-panel" aria-label="Language learning app" />
+  const { t } = useTranslation()
+
+  return <section className="brand-panel" aria-label={t('app.brandAriaLabel')} />
 }

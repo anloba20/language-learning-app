@@ -1,0 +1,196 @@
+{
+  "app": {
+    "name": "LingoPuh",
+    "tagline": "Õpi mängides",
+    "brandAriaLabel": "Keeleõppe rakendus",
+    "catLogoAlt": "LingoPuhi kassiga logo"
+  },
+  "navigation": {
+    "games": "Mängud",
+    "progress": "Edusammud",
+    "profile": "Profiil",
+    "logout": "Logi välja",
+    "ariaLabel": "Töölaua navigeerimine",
+    "mainSectionsAriaLabel": "Peamised jaotised"
+  },
+  "languages": {
+    "russian": "Vene keel",
+    "english": "Inglise keel",
+    "estonian": "Eesti keel",
+    "german": "Saksa keel",
+    "codes": {
+      "ru": "RU",
+      "et": "EST",
+      "en": "ENG",
+      "de": "GER",
+      "no": "NOR"
+    },
+    "norwegian": "Norra keel"
+  },
+  "auth": {
+    "ariaLabel": "Autentimine",
+    "availableLanguagesAriaLabel": "Saadaolevad keeled",
+    "modes": {
+      "ariaLabel": "Autentimise režiim",
+      "signIn": "Logi sisse",
+      "register": "Registreeru"
+    },
+    "form": {
+      "nickname": "Kasutajanimi",
+      "email": "Email",
+      "password": "Parool",
+      "confirmPassword": "Kinnita parool"
+    },
+    "submit": {
+      "signIn": "Logi sisse",
+      "createAccount": "Loo konto"
+    },
+    "notifications": {
+      "loginFailed": "Sisselogimine ebaõnnestus",
+      "registrationFailed": "Registreerimine ebaõnnestus",
+      "genericError": "Midagi läks valesti. Proovi uuesti."
+    },
+    "validation": {
+      "required": "Väli {{field}} on kohustuslik.",
+      "passwordsMustMatch": "Paroolid peavad kattuma."
+    },
+    "errors": {
+      "tokenMissing": "Autentimistoken puudub",
+      "loginFailed": "Sisselogimine ebaõnnestus",
+      "registrationFailed": "Registreerimine ebaõnnestus"
+    },
+    "serverErrors": {
+      "invalidCredentials": "Vale kasutajanimi või parool.",
+      "userAlreadyExists": "Kasutajanimi või email on juba kasutusel.",
+      "validationFailed": "Kontrolli vormi välju ja proovi uuesti.",
+      "unauthorized": "Palun logi uuesti sisse.",
+      "userNotFound": "Kasutajat ei leitud."
+    }
+  },
+  "dashboard": {
+    "languageModal": {
+      "title": "Vali oma keeled",
+      "copy": "Ütle meile oma emakeel ja keel, mida soovid esimesena õppida.",
+      "nativeLanguage": "Emakeel",
+      "nativeLanguagePlaceholder": "Vali emakeel",
+      "learningLanguage": "Õpitav keel",
+      "learningLanguagePlaceholder": "Vali õpitav keel",
+      "sameLanguageError": "Emakeel ja õpitav keel peavad olema erinevad.",
+      "continue": "Jätka"
+    },
+    "summary": {
+      "ariaLabel": "Õppimise kokkuvõte",
+      "kicker": "Tänane harjutus",
+      "title": "Jätka inglise keele õppimist",
+      "copy": "Vene keelest inglise keelde - praeguses voorus on jäänud 8 sõna",
+      "continueLabel": "Jätka",
+      "continueTitle": "Word Match",
+      "continueMeta": "Sõnavara - Tase 2",
+      "statsAriaLabel": "Praegune edenemine",
+      "stats": {
+        "points": "Punktid",
+        "words": "Sõnad",
+        "streak": "Seeria",
+        "streakValue": "4 päeva"
+      }
+    },
+    "lobby": {
+      "previousCategoryGames": "Eelmised {{category}} mängud",
+      "nextCategoryGames": "Järgmised {{category}} mängud",
+      "categoryGamesAriaLabel": "{{category}} mängud",
+      "categoryControlsAriaLabel": "{{category}} juhtnupud"
+    },
+    "categories": {
+      "vocabulary": "Sõnavara",
+      "listening": "Kuulamine",
+      "spelling": "Õigekiri",
+      "grammar": "Grammatika"
+    }
+  },
+  "games": {
+    "wordMatch": {
+      "title": "Word Match",
+      "subtitle": "Ühenda sõnad kiiresti"
+    },
+    "memoryCards": {
+      "title": "Memory Cards",
+      "subtitle": "Jäta tõlked meelde"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Kiire sõnade kordamine"
+    },
+    "speedTranslation": {
+      "title": "Speed Translation",
+      "subtitle": "Võida taimer"
+    },
+    "pictureWords": {
+      "title": "Picture Words",
+      "subtitle": "Õpi piltide abil"
+    },
+    "wordHunt": {
+      "title": "Word Hunt",
+      "subtitle": "Leia peidetud sõnad"
+    },
+    "listenAndChoose": {
+      "title": "Listen & Choose",
+      "subtitle": "Vali tähendus"
+    },
+    "audioMatch": {
+      "title": "Audio Match",
+      "subtitle": "Ühenda heli ja sõna"
+    },
+    "soundSprint": {
+      "title": "Sound Sprint",
+      "subtitle": "Reageeri fraasidele"
+    },
+    "phraseEcho": {
+      "title": "Phrase Echo",
+      "subtitle": "Korda lühikesi lauseid"
+    },
+    "minimalPairs": {
+      "title": "Minimal Pairs",
+      "subtitle": "Kuula väikseid erinevusi"
+    },
+    "typeTheWord": {
+      "title": "Type the Word",
+      "subtitle": "Kirjuta sõna õigesti"
+    },
+    "missingLetters": {
+      "title": "Missing Letters",
+      "subtitle": "Täida lüngad"
+    },
+    "wordBuilder": {
+      "title": "Word Builder",
+      "subtitle": "Ehita sõnu osadest"
+    },
+    "letterRush": {
+      "title": "Letter Rush",
+      "subtitle": "Vali tähtede järjekord"
+    },
+    "silentLetter": {
+      "title": "Silent Letter",
+      "subtitle": "Märka keerulisi sõnu"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "subtitle": "Koosta õigeid fraase"
+    },
+    "chooseForm": {
+      "title": "Choose Form",
+      "subtitle": "Vali õige vorm"
+    },
+    "fixThePhrase": {
+      "title": "Fix the Phrase",
+      "subtitle": "Paranda vead"
+    },
+    "caseQuest": {
+      "title": "Case Quest",
+      "subtitle": "Harjuta struktuuri"
+    },
+    "tinyDialogues": {
+      "title": "Tiny Dialogues",
+      "subtitle": "Täienda vastuseid"
+    }
+  }
+}

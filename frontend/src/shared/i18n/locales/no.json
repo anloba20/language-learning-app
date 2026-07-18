@@ -1,0 +1,196 @@
+{
+  "app": {
+    "name": "LingoPuh",
+    "tagline": "Lær ved å spille",
+    "brandAriaLabel": "Språklæringsapp",
+    "catLogoAlt": "LingoPuh-logo med katt"
+  },
+  "navigation": {
+    "games": "Spill",
+    "progress": "Fremgang",
+    "profile": "Profil",
+    "logout": "Logg ut",
+    "ariaLabel": "Dashboard-navigasjon",
+    "mainSectionsAriaLabel": "Hovedseksjoner"
+  },
+  "languages": {
+    "russian": "Russisk",
+    "english": "Engelsk",
+    "estonian": "Estisk",
+    "german": "Tysk",
+    "norwegian": "Norsk",
+    "codes": {
+      "ru": "RU",
+      "et": "EST",
+      "en": "ENG",
+      "de": "GER",
+      "no": "NOR"
+    }
+  },
+  "auth": {
+    "ariaLabel": "Autentisering",
+    "availableLanguagesAriaLabel": "Tilgjengelige språk",
+    "modes": {
+      "ariaLabel": "Autentiseringsmodus",
+      "signIn": "Logg inn",
+      "register": "Registrer"
+    },
+    "form": {
+      "nickname": "Kallenavn",
+      "email": "E-post",
+      "password": "Passord",
+      "confirmPassword": "Bekreft passord"
+    },
+    "submit": {
+      "signIn": "Logg inn",
+      "createAccount": "Opprett konto"
+    },
+    "notifications": {
+      "loginFailed": "Innlogging mislyktes",
+      "registrationFailed": "Registrering mislyktes",
+      "genericError": "Noe gikk galt. Prøv igjen."
+    },
+    "validation": {
+      "required": "{{field}} er påkrevd.",
+      "passwordsMustMatch": "Passordene må være like."
+    },
+    "errors": {
+      "tokenMissing": "Autentiseringstoken mangler",
+      "loginFailed": "Innlogging mislyktes",
+      "registrationFailed": "Registrering mislyktes"
+    },
+    "serverErrors": {
+      "invalidCredentials": "Ugyldig kallenavn eller passord.",
+      "userAlreadyExists": "Kallenavn eller e-post er allerede i bruk.",
+      "validationFailed": "Sjekk feltene og prøv igjen.",
+      "unauthorized": "Vennligst logg inn på nytt.",
+      "userNotFound": "Brukeren ble ikke funnet."
+    }
+  },
+  "dashboard": {
+    "languageModal": {
+      "title": "Velg språkene dine",
+      "copy": "Fortell oss morsmålet ditt og hvilket språk du vil lære først.",
+      "nativeLanguage": "Morsmål",
+      "nativeLanguagePlaceholder": "Velg morsmål",
+      "learningLanguage": "Språk å lære",
+      "learningLanguagePlaceholder": "Velg språk å lære",
+      "sameLanguageError": "Morsmål og språket du lærer må være forskjellige.",
+      "continue": "Fortsett"
+    },
+    "summary": {
+      "ariaLabel": "Læringsoversikt",
+      "kicker": "Dagens øvelse",
+      "title": "Fortsett å lære engelsk",
+      "copy": "Fra russisk til engelsk - 8 ord igjen i denne runden",
+      "continueLabel": "Fortsett",
+      "continueTitle": "Word Match",
+      "continueMeta": "Vokabular - Nivå 2",
+      "statsAriaLabel": "Nåværende fremgang",
+      "stats": {
+        "points": "Poeng",
+        "words": "Ord",
+        "streak": "Serie",
+        "streakValue": "4 dager"
+      }
+    },
+    "lobby": {
+      "previousCategoryGames": "Forrige {{category}}-spill",
+      "nextCategoryGames": "Neste {{category}}-spill",
+      "categoryGamesAriaLabel": "{{category}}-spill",
+      "categoryControlsAriaLabel": "{{category}}-kontroller"
+    },
+    "categories": {
+      "vocabulary": "Vokabular",
+      "listening": "Lytting",
+      "spelling": "Staving",
+      "grammar": "Grammatikk"
+    }
+  },
+  "games": {
+    "wordMatch": {
+      "title": "Word Match",
+      "subtitle": "Koble ord raskt"
+    },
+    "memoryCards": {
+      "title": "Memory Cards",
+      "subtitle": "Husk oversettelser"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Rask ordrepetisjon"
+    },
+    "speedTranslation": {
+      "title": "Speed Translation",
+      "subtitle": "Slå timeren"
+    },
+    "pictureWords": {
+      "title": "Picture Words",
+      "subtitle": "Lær med bilder"
+    },
+    "wordHunt": {
+      "title": "Word Hunt",
+      "subtitle": "Finn skjulte ord"
+    },
+    "listenAndChoose": {
+      "title": "Listen & Choose",
+      "subtitle": "Velg betydningen"
+    },
+    "audioMatch": {
+      "title": "Audio Match",
+      "subtitle": "Koble lyd til ord"
+    },
+    "soundSprint": {
+      "title": "Sound Sprint",
+      "subtitle": "Reager på fraser"
+    },
+    "phraseEcho": {
+      "title": "Phrase Echo",
+      "subtitle": "Gjenta korte setninger"
+    },
+    "minimalPairs": {
+      "title": "Minimal Pairs",
+      "subtitle": "Hør små forskjeller"
+    },
+    "typeTheWord": {
+      "title": "Type the Word",
+      "subtitle": "Skriv ordet riktig"
+    },
+    "missingLetters": {
+      "title": "Missing Letters",
+      "subtitle": "Fyll inn hullene"
+    },
+    "wordBuilder": {
+      "title": "Word Builder",
+      "subtitle": "Bygg ord av deler"
+    },
+    "letterRush": {
+      "title": "Letter Rush",
+      "subtitle": "Velg rekkefølgen"
+    },
+    "silentLetter": {
+      "title": "Silent Letter",
+      "subtitle": "Finn vanskelige ord"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "subtitle": "Lag riktige setninger"
+    },
+    "chooseForm": {
+      "title": "Choose Form",
+      "subtitle": "Velg riktig form"
+    },
+    "fixThePhrase": {
+      "title": "Fix the Phrase",
+      "subtitle": "Rett feilene"
+    },
+    "caseQuest": {
+      "title": "Case Quest",
+      "subtitle": "Øv på struktur"
+    },
+    "tinyDialogues": {
+      "title": "Tiny Dialogues",
+      "subtitle": "Fullfør svarene"
+    }
+  }
+}
