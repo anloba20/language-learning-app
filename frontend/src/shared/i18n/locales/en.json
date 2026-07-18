@@ -192,5 +192,33 @@
       "title": "Tiny Dialogues",
       "subtitle": "Complete replies"
     }
+  },
+  "wordMatch": {
+    "boardAriaLabel": "Word matching board",
+    "actions": {
+      "back": "Back",
+      "reset": "Reset"
+    },
+    "columns": {
+      "words": "Words",
+      "translations": "Translations"
+    },
+    "feedback": {
+      "chooseWordFirst": "Choose a word first",
+      "correct": "Correct match",
+      "wrong": "Not quite, try another pair"
+    },
+    "status": {
+      "completed": "Completed",
+      "matched": "matched",
+      "mistakes": "mistakes"
+    },
+    "vocabulary": {
+      "kicker": "Needs practice",
+      "title": "Add difficult words to vocabulary?",
+      "addAll": "Add all",
+      "add": "Add",
+      "saved": "Saved"
+    }
   }
 }

@@ -192,5 +192,33 @@
       "title": "Tiny Dialogues",
       "subtitle": "Täienda vastuseid"
     }
+  },
+  "wordMatch": {
+    "boardAriaLabel": "Sõnade sobitamise laud",
+    "actions": {
+      "back": "Tagasi",
+      "reset": "Lähtesta"
+    },
+    "columns": {
+      "words": "Sõnad",
+      "translations": "Tõlked"
+    },
+    "feedback": {
+      "chooseWordFirst": "Vali kõigepealt sõna",
+      "correct": "Õige paar",
+      "wrong": "Mitte päris, proovi teist paari"
+    },
+    "status": {
+      "completed": "Valmis",
+      "matched": "sobitatud",
+      "mistakes": "viga"
+    },
+    "vocabulary": {
+      "kicker": "Vajab harjutamist",
+      "title": "Lisa keerulised sõnad sõnavarasse?",
+      "addAll": "Lisa kõik",
+      "add": "Lisa",
+      "saved": "Salvestatud"
+    }
   }
 }
