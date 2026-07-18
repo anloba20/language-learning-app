@@ -20,6 +20,10 @@ jobs:
             working-directory: frontend
             run: npm ci
 
+          - name: Lint frontend
+            working-directory: frontend
+            run: npm run lint
+    
           - name: Build frontend
             working-directory: frontend
             run: npm run build
@@ -46,6 +50,10 @@ jobs:
           - name: Install dependencies
             working-directory: backend
             run: npm ci
+    
+          - name: Lint backend
+            working-directory: backend
+            run: npm run lint
 
           - name: Typecheck backend
             working-directory: backend
