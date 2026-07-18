@@ -1,22 +1,46 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { WordMatchBoard } from '../features/games/word-match/components/WordMatchBoard'
+import { WordMatchHeader } from '../features/games/word-match/components/WordMatchHeader'
+import { WordMatchStatus } from '../features/games/word-match/components/WordMatchStatus'
+import { WordMatchVocabularySuggestions } from '../features/games/word-match/components/WordMatchVocabularySuggestions'
 import { mockWordPairs } from '../features/games/word-match/mockWordPairs'
+import type { VocabularyCandidate, WordMatchAttempt } from '../features/games/word-match/wordMatch.types'
 import './WordMatchPage.css'
+
+const MISTAKES_BEFORE_VOCABULARY_SUGGESTION = 3
 
 function shuffleWordPairs<T>(items: T[]): T[] {
   return [...items].sort(() => Math.random() - 0.5)
 }
 
 export function WordMatchPage() {
+  const { t } = useTranslation()
   const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null)
   const [matchedIds, setMatchedIds] = useState<string[]>([])
   const [feedback, setFeedback] = useState<string | null>(null)
+  const [attempts, setAttempts] = useState<WordMatchAttempt[]>([])
+  const [mistakesByPairId, setMistakesByPairId] = useState<Record<string, number>>({})
+  const [savedVocabularyIds, setSavedVocabularyIds] = useState<string[]>([])
   const targetPairs = useMemo(() => shuffleWordPairs(mockWordPairs), [])
 
+  const mistakesCount = attempts.filter((attempt) => !attempt.isCorrect).length
   const isCompleted = matchedIds.length === mockWordPairs.length
+  const vocabularyCandidates: VocabularyCandidate[] = mockWordPairs
+    .map((pair) => ({
+      pairId: pair.id,
+      source: pair.source,
+      target: pair.target,
+      mistakesCount: mistakesByPairId[pair.id] ?? 0,
+    }))
+    .filter((candidate) => candidate.mistakesCount >= MISTAKES_BEFORE_VOCABULARY_SUGGESTION)
 
   function isMatched(pairId: string) {
     return matchedIds.includes(pairId)
+  }
+
+  function isSavedToVocabulary(pairId: string) {
+    return savedVocabularyIds.includes(pairId)
   }
 
   function handleSourceClick(pairId: string) {
@@ -34,92 +58,108 @@ export function WordMatchPage() {
     }
 
     if (!selectedSourceId) {
-      setFeedback('Choose a word first')
+      setFeedback(t('wordMatch.feedback.chooseWordFirst'))
       return
     }
 
-    if (selectedSourceId === pairId) {
+    const isCorrect = selectedSourceId === pairId
+    const nextAttempt: WordMatchAttempt = {
+      sourcePairId: selectedSourceId,
+      targetPairId: pairId,
+      isCorrect,
+    }
+
+    setAttempts((currentAttempts) => [...currentAttempts, nextAttempt])
+
+    if (isCorrect) {
       setMatchedIds((currentMatchedIds) => [...currentMatchedIds, pairId])
       setSelectedSourceId(null)
-      setFeedback('Correct match')
+      setFeedback(t('wordMatch.feedback.correct'))
       return
     }
 
+    setMistakesByPairId((currentMistakes) => ({
+      ...currentMistakes,
+      [selectedSourceId]: (currentMistakes[selectedSourceId] ?? 0) + 1,
+    }))
     setSelectedSourceId(null)
-    setFeedback('Not quite, try another pair')
+    setFeedback(t('wordMatch.feedback.wrong'))
+  }
+
+  function saveVocabularyWord(pairId: string) {
+    setSavedVocabularyIds((currentSavedIds) => {
+      if (currentSavedIds.includes(pairId)) {
+        return currentSavedIds
+      }
+
+      return [...currentSavedIds, pairId]
+    })
+  }
+
+  function saveAllVocabularyWords() {
+    setSavedVocabularyIds((currentSavedIds) => {
+      const candidateIds = vocabularyCandidates.map((candidate) => candidate.pairId)
+      return Array.from(new Set([...currentSavedIds, ...candidateIds]))
+    })
   }
 
   function resetGame() {
     setSelectedSourceId(null)
     setMatchedIds([])
     setFeedback(null)
+    setAttempts([])
+    setMistakesByPairId({})
+    setSavedVocabularyIds([])
   }
 
   return (
     <main className="word-match-page">
       <section className="word-match-shell" aria-labelledby="word-match-title">
-        <header className="word-match-header">
-          <div>
-            <p className="word-match-kicker">Vocabulary</p>
-            <h1 id="word-match-title">Word Match</h1>
-          </div>
+        <WordMatchHeader
+          backLabel={t('wordMatch.actions.back')}
+          category={t('dashboard.categories.vocabulary')}
+          resetLabel={t('wordMatch.actions.reset')}
+          title={t('games.wordMatch.title')}
+          onReset={resetGame}
+        />
 
-          <div className="word-match-actions">
-            <Link className="word-match-link" to="/dashboard">
-              Back
-            </Link>
-            <button className="word-match-reset" type="button" onClick={resetGame}>
-              Reset
-            </button>
-          </div>
-        </header>
+        <WordMatchStatus
+          completedLabel={t('wordMatch.status.completed')}
+          feedback={feedback}
+          isCompleted={isCompleted}
+          matchedCount={matchedIds.length}
+          matchedLabel={t('wordMatch.status.matched')}
+          mistakesCount={mistakesCount}
+          mistakesLabel={t('wordMatch.status.mistakes')}
+          totalCount={mockWordPairs.length}
+        />
 
-        <div className="word-match-status" aria-live="polite">
-          <span>{matchedIds.length} / {mockWordPairs.length} matched</span>
-          {feedback && <span>{feedback}</span>}
-          {isCompleted && <span>Completed</span>}
-        </div>
+        <WordMatchBoard
+          boardAriaLabel={t('wordMatch.boardAriaLabel')}
+          isMatched={isMatched}
+          selectedSourceId={selectedSourceId}
+          sourceColumnTitle={t('wordMatch.columns.words')}
+          sourcePairs={mockWordPairs}
+          targetColumnTitle={t('wordMatch.columns.translations')}
+          targetPairs={targetPairs}
+          onSourceClick={handleSourceClick}
+          onTargetClick={handleTargetClick}
+        />
 
-        <section className="word-match-board" aria-label="Word matching board">
-          <div className="word-match-column">
-            <h2>Words</h2>
-
-            <div className="word-match-list">
-              {mockWordPairs.map((pair) => (
-                <button
-                  className="word-match-card"
-                  data-selected={selectedSourceId === pair.id || undefined}
-                  data-matched={isMatched(pair.id) || undefined}
-                  disabled={isMatched(pair.id)}
-                  key={pair.id}
-                  type="button"
-                  onClick={() => handleSourceClick(pair.id)}
-                >
-                  {pair.source}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="word-match-column">
-            <h2>Translations</h2>
-
-            <div className="word-match-list">
-              {targetPairs.map((pair) => (
-                <button
-                  className="word-match-card"
-                  data-matched={isMatched(pair.id) || undefined}
-                  disabled={isMatched(pair.id)}
-                  key={pair.id}
-                  type="button"
-                  onClick={() => handleTargetClick(pair.id)}
-                >
-                  {pair.target}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
+        {isCompleted && (
+          <WordMatchVocabularySuggestions
+            addAllLabel={t('wordMatch.vocabulary.addAll')}
+            addLabel={t('wordMatch.vocabulary.add')}
+            candidates={vocabularyCandidates}
+            isSavedToVocabulary={isSavedToVocabulary}
+            kicker={t('wordMatch.vocabulary.kicker')}
+            mistakesLabel={t('wordMatch.status.mistakes')}
+            savedLabel={t('wordMatch.vocabulary.saved')}
+            title={t('wordMatch.vocabulary.title')}
+            onSaveAll={saveAllVocabularyWords}
+            onSaveWord={saveVocabularyWord}
+          />
+        )}
       </section>
     </main>
   )

@@ -192,5 +192,33 @@
       "title": "Tiny Dialogues",
       "subtitle": "Antworten ergänzen"
     }
+  },
+  "wordMatch": {
+    "boardAriaLabel": "Wortzuordnungsfeld",
+    "actions": {
+      "back": "Zurück",
+      "reset": "Zurücksetzen"
+    },
+    "columns": {
+      "words": "Wörter",
+      "translations": "Übersetzungen"
+    },
+    "feedback": {
+      "chooseWordFirst": "Wähle zuerst ein Wort",
+      "correct": "Richtiges Paar",
+      "wrong": "Nicht ganz, versuche ein anderes Paar"
+    },
+    "status": {
+      "completed": "Abgeschlossen",
+      "matched": "zugeordnet",
+      "mistakes": "Fehler"
+    },
+    "vocabulary": {
+      "kicker": "Braucht Übung",
+      "title": "Schwierige Wörter zum Wortschatz hinzufügen?",
+      "addAll": "Alle hinzufügen",
+      "add": "Hinzufügen",
+      "saved": "Gespeichert"
+    }
   }
 }

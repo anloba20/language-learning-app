@@ -159,6 +159,92 @@
   cursor: default;
 }
 
+
+.word-match-vocabulary {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(3, 252, 140, 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 92% 18%, rgba(3, 252, 140, 0.16), transparent 28%),
+    rgba(255, 255, 255, 0.06);
+}
+
+.word-match-vocabulary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.word-match-vocabulary-header h2 {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.word-match-vocabulary-list {
+  display: grid;
+  gap: 10px;
+}
+
+.word-match-vocabulary-item {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.word-match-vocabulary-word,
+.word-match-vocabulary-translation {
+  display: block;
+}
+
+.word-match-vocabulary-word {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.word-match-vocabulary-translation,
+.word-match-vocabulary-meta {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.78rem;
+  font-weight: 780;
+}
+
+.word-match-vocabulary-button {
+  min-height: 38px;
+  min-width: 82px;
+  padding: 0 14px;
+  border: 1px solid rgba(3, 252, 140, 0.42);
+  border-radius: 8px;
+  background: rgba(3, 252, 140, 0.14);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.word-match-vocabulary-button:hover:not(:disabled) {
+  background: rgba(3, 252, 140, 0.24);
+}
+
+.word-match-vocabulary-button:disabled {
+  color: rgba(255, 255, 255, 0.58);
+  cursor: default;
+}
+
 @media (max-width: 720px) {
   .word-match-page {
     padding: 12px;
@@ -170,6 +256,12 @@
   }
 
   .word-match-board {
+    grid-template-columns: 1fr;
+  }
+
+  .word-match-vocabulary-header,
+  .word-match-vocabulary-item {
+    align-items: stretch;
     grid-template-columns: 1fr;
   }
 }
