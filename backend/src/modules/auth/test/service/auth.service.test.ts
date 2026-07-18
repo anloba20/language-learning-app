@@ -7,7 +7,7 @@ import {
     registerUser,
     validateLoginCredentials,
 } from "../../auth.service";
-import type { AuthTokenPayload, RegisteredUserDbType, UserCredentials } from "../../auth.types";
+import type { AuthTokenPayload, RegisteredUserDbType, UserCredentials, UserProfileCredentials } from "../../auth.types";
 import { jwtSecret } from "../../../../config/auth";
 import { createUser, getUserById, getUserByNickname } from "../../auth.database";
 import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
@@ -153,11 +153,13 @@ describe('AuthService', () => {
         });
 
         it('should return user profile for existing user id', async () => {
-            const profile: RegisteredUserDbType = {
+            const profile: UserProfileCredentials = {
                 id: '1',
                 nickname: 'validNickname',
                 email: 'valid@mail.com',
                 role: 'user',
+                native_language_id: 1,
+                foreign_language_id: 2,
             };
 
             getUserByIdMock.mockResolvedValue(profile);

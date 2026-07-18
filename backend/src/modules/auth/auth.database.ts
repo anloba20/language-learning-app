@@ -18,5 +18,5 @@ export const getUserByNickname = async (nickname: string): Promise<UserCredentia
 }
 
 export const getUserById = async (id: string): Promise<UserProfileCredentials | null> => {
-    return db('users').select('id', 'nickname', 'email', 'role').where({id}).first()
+    return db('users').select('id', 'nickname', 'email', 'role', 'native_language_id', 'foreign_language_id').where({id}).first()
 }

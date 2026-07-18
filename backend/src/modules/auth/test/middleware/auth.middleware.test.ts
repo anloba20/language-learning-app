@@ -3,7 +3,7 @@ import express from 'express';
 import request from "supertest";
 import { authMiddleware } from "../../auth.middleware";
 import { authErrorCodes } from "../../auth.errors";
-import { createAuthHeader } from "../../../test/utils.test";
+import { createAuthHeader } from "../../../test/utils";
 
 describe('AuthMiddleware', () => {
   const app = express();

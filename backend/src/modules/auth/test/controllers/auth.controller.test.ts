@@ -7,7 +7,7 @@ import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
 import { authMiddleware } from "../../auth.middleware";
-import { createAuthHeader } from '../../../test/utils.test';
+import { createAuthHeader } from '../../../test/utils';
 
 
 vi.mock('../../auth.service', () => ({
@@ -168,6 +168,8 @@ describe('AuthController', () => {
                 nickname: 'validNickname',
                 email: 'validEmail@mail.com',
                 role: 'user',
+                native_language_id: 1,
+                foreign_language_id: 2,
             };
             getUserProfileMock.mockResolvedValue(expectedProfile);
 
