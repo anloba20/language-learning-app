@@ -1,7 +1,8 @@
 import express from 'express';
 
-export const vocabularyRouter = express.Router();
-
+import { authMiddleware } from '../auth/auth.middleware';
 import { vocabularyController } from './vocabulary.controller';
 
-vocabularyRouter.get('/:topic_slug/level/:level', vocabularyController);
+export const vocabularyRouter = express.Router();
+
+vocabularyRouter.get('/:topic_slug/level/:level', authMiddleware, vocabularyController);

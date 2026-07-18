@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import express from 'express';
 import request from "supertest";
 import { authMiddleware } from "../../auth.middleware";
-import { generateAccessToken } from "../../auth.service";
 import { authErrorCodes } from "../../auth.errors";
+import { createAuthHeader } from "../../../test/utils.test";
 
 describe('AuthMiddleware', () => {
   const app = express();
@@ -30,14 +30,10 @@ describe('AuthMiddleware', () => {
   });
 
   it('should allow request with valid Authorization header', async () => {
-    const token = generateAccessToken({
-      userId: 'user_1',
-      role: 'user',
-    });
 
     const response = await request(app)
       .get('/protected')
-      .set('Authorization', `Bearer ${token}`);
+      .set(createAuthHeader({ userId: 'user_1', role: 'user' }));
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
