@@ -2,6 +2,10 @@ import type { AuthFormValues } from '../../features/auth/types'
 
 const API_BASE_URL = 'http://localhost:3000'
 
+type AuthResponse = {
+  token?: string
+}
+
 async function getErrorMessage(response: Response, fallbackMessage: string) {
   try {
     const data = await response.json()
@@ -11,15 +15,17 @@ async function getErrorMessage(response: Response, fallbackMessage: string) {
   }
 }
 
-function saveToken(data: { token?: string; accessToken?: string }) {
-  const token = data.token ?? data.accessToken
+function getToken(data: AuthResponse) {
+  const token = data.token;
 
-  if (token) {
-    sessionStorage.setItem('token', token)
+  if (!token) {
+    throw new Error('Authentication token is missing')
   }
+
+  return token
 }
 
-export const registerUser = async (form: AuthFormValues): Promise<void> => {
+export const registerUser = async (form: AuthFormValues): Promise<string> => {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: {
@@ -28,15 +34,15 @@ export const registerUser = async (form: AuthFormValues): Promise<void> => {
     body: JSON.stringify(form),
   })
 
-  if (!response.ok) {
+  if (response.status !== 201) {
     throw new Error(await getErrorMessage(response, 'Registration failed'))
   }
 
   const data = await response.json()
-  saveToken(data)
+  return getToken(data)
 }
 
-export const loginUser = async (form: AuthFormValues): Promise<void> => {
+export const loginUser = async (form: AuthFormValues): Promise<string> => {
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -45,10 +51,10 @@ export const loginUser = async (form: AuthFormValues): Promise<void> => {
     body: JSON.stringify(form),
   })
 
-  if (!response.ok) {
+  if (response.status !== 200) {
     throw new Error(await getErrorMessage(response, 'Login failed'))
   }
 
   const data = await response.json()
-  saveToken(data)
+  return getToken(data)
 }
