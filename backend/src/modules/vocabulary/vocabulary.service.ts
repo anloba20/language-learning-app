@@ -4,11 +4,16 @@ import { LanguagesNotFound } from "./vocabulary.errors";
 
 export const fetchVocabulary = async (topicSlug: string, level: number, userId: string) => {
     try {
-        const {native_language_id, foreign_language_id} = await getUserProfile(userId);
-        if (!native_language_id || !foreign_language_id) {
+        const {native_language_id: nativeLanguageId, foreign_language_id: foreignLanguageId} = await getUserProfile(userId);
+        if (!nativeLanguageId || !foreignLanguageId) {
           throw new LanguagesNotFound();
         }
-        const vocabulary = await getVocabulary(topicSlug, level, {nativeLanguageId: native_language_id, foreignLanguageId: foreign_language_id});
+        const vocabulary = await getVocabulary({
+            topicSlug,
+            level,
+            nativeLanguageId,
+            foreignLanguageId,
+        });
         return vocabulary;
     } catch (error: unknown) {
         if (error instanceof LanguagesNotFound) {

@@ -30,14 +30,13 @@ describe('AuthMiddleware', () => {
   });
 
   it('should allow request with valid Authorization header', async () => {
-
     const response = await request(app)
       .get('/protected')
-      .set(createAuthHeader({ userId: 'user_1', role: 'user' }));
+      .set(createAuthHeader({ userId: '1', role: 'user' }));
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      userId: 'user_1',
+      userId: '1',
       role: 'user',
     });
   });

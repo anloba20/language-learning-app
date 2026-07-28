@@ -1,21 +1,23 @@
 import { db } from "../../db/database";
 
-export const getVocabulary = async (topicSlug: string, level: number, {nativeLanguageId, foreignLanguageId}: {nativeLanguageId: number, foreignLanguageId: number}) => {
+import type { VocabularyParams } from './vocabulary.types';
+
+export const getVocabulary = async ({ topicSlug, level, nativeLanguageId, foreignLanguageId }: VocabularyParams) => {
   return db.raw(`
     SELECT
-  vocabulary.id,
-  vocabulary.topic_slug,
-  vocabulary.level,
-  vocabulary.translations ->> native_language.code AS source_text,
-  vocabulary.translations ->> foreign_language.code AS target_text
-FROM vocabulary, languages AS native_language, languages AS foreign_language
-WHERE native_language.id = ?
-  AND foreign_language.id = ?
-  AND vocabulary.topic_slug = ?
-  AND vocabulary.level = ?
-  AND vocabulary.translations ->> native_language.code IS NOT NULL
-  AND vocabulary.translations ->> foreign_language.code IS NOT NULL
+  v.id,
+  v.topic_slug,
+  v.level,
+  v.translations ->> native_language.code AS source_text,
+  v.translations ->> foreign_language.code AS target_text
+FROM vocabulary AS v, languages AS native_language, languages AS foreign_language
+WHERE native_language.id = :nativeLanguageId
+  AND foreign_language.id = :foreignLanguageId
+  AND v.topic_slug = :topicSlug
+  AND v.level = :level
+  AND v.translations ->> native_language.code IS NOT NULL
+  AND v.translations ->> foreign_language.code IS NOT NULL
 ORDER BY random()
 LIMIT 5
-   `, [nativeLanguageId, foreignLanguageId, topicSlug, level]);
+   `, { nativeLanguageId, foreignLanguageId, topicSlug, level });
 };

@@ -21,7 +21,7 @@ describe('vocabularyController', () => {
     });
 
     it('should return 401 if token is missing', async () => {
-        const res = await request(app).get('/vocabulary/animals/level/1');
+        const res = await request(app).get('/vocabulary/animals/level/A1');
 
         expect(res.status).toBe(401);
         expect(fetchVocabularyMock).not.toHaveBeenCalled();
@@ -29,7 +29,7 @@ describe('vocabularyController', () => {
 
     it('should return 400 if query parameters are sent', async () => {
         const res = await request(app)
-            .get('/vocabulary/animals/level/1')
+            .get('/vocabulary/animals/level/A1')
             .query({ limit: 10 })
             .set(createAuthHeader());
 
@@ -43,14 +43,14 @@ describe('vocabularyController', () => {
                 id: '1',
                 topic_slug: 'animals',
                 level: 1,
-                source_text: 'кот',
+                source_text: 'kot',
                 target_text: 'cat',
             },
         ];
         fetchVocabularyMock.mockResolvedValue(vocabulary);
 
         const res = await request(app)
-            .get('/vocabulary/animals/level/1')
+            .get('/vocabulary/animals/level/A1')
             .set(createAuthHeader({ userId: '1', role: 'user' }));
 
         expect(res.status).toBe(200);

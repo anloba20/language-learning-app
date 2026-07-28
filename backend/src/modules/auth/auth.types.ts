@@ -17,4 +17,7 @@ export type UserCredentials = RegisteredUserDbType & {
     password_hash: string;
 };
 
-export type UserProfileCredentials = {native_language_id: number | null, foreign_language_id: number | null } & RegisteredUserDbType;
+export type UserProfileCredentials = {
+    native_language_id: number | null;
+    foreign_language_id: number | null;
+} & RegisteredUserDbType;
