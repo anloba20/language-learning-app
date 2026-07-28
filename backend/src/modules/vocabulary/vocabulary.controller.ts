@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { emptyQuerySchema, vocabularyParamsSchema } from './vocabulary.schema';
 import { fetchVocabulary } from './vocabulary.service';
-import { LanguagesNotFound } from './vocabulary.errors';
+import type { LanguagesNotFound } from './vocabulary.errors';
 
 export const vocabularyController = async (req: Request, res: Response) => {
     const queryResult = emptyQuerySchema.safeParse(req.query);
