@@ -3,7 +3,7 @@ import { jwtSecret } from "../../config/auth";
 import type { AuthTokenPayload, RegisteredUser, UserProfileCredentials } from "./auth.types";
 import jwt from 'jsonwebtoken';
 import { createUser, getUserById, getUserByNickname, updateUser } from "./auth.database";
-import type { LoginInput, RegisterInput } from "./auth.schema";
+import type { LoginInput, RegisterInput, UpdateProfileInput } from "./auth.schema";
 import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "./auth.errors";
 
 export const generateAccessToken = (payload: AuthTokenPayload): string => {
@@ -77,7 +77,7 @@ export const getUserProfile = async (id: string) => {
     return user;
 }
 
-export const updateUserProfile = async (id: string, profileData: Partial<UserProfileCredentials>) => {
+export const updateUserProfile = async (id: string, profileData: UpdateProfileInput) => {
     try {
         if (!isValidBigintId(id)) {
             throw new InvalidCredentialsError();

@@ -1,5 +1,6 @@
 import { db } from "../../db/database";
 import type { RegisteredUserDbType, RegisterUserInput, UserCredentials, UserProfileCredentials } from "./auth.types";
+import type { UpdateProfileInput } from "./auth.schema";
 
 export const createUser = async ({ nickname, password_hash, email }: RegisterUserInput): Promise<RegisteredUserDbType> => {
     const [{id, role}] =  await db('users').insert({
@@ -26,7 +27,7 @@ export const getUserById = async (id: string): Promise<UserProfileCredentials | 
     return user || null;
 }
 
-export const updateUser = async (id: string, userData: Partial<UserProfileCredentials>): Promise<UserProfileCredentials> => {
+export const updateUser = async (id: string, userData: UpdateProfileInput): Promise<UserProfileCredentials> => {
     const [user] = await db('users')
         .where({ id })
         .update({...userData, updated_at: db.fn.now()})

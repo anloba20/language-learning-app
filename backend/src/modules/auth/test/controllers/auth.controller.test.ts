@@ -23,7 +23,7 @@ app.use(express.json());
 app.post('/auth/login', loginController);
 app.post('/auth/register', registerController);
 app.get('/auth/profile', authMiddleware, profileController);
-app.put('/auth/profile/:userId', authMiddleware, updateProfileController);
+app.put('/auth/profile', authMiddleware, updateProfileController);
 
 
 describe('AuthController', () => {
@@ -230,7 +230,7 @@ describe('AuthController', () => {
             updateUserProfileMock.mockResolvedValue(updatedProfile);
 
             const res = await request(app)
-                .put(`/auth/profile/${updatedProfile.id}`)
+                .put('/auth/profile')
                 .set(createAuthHeader({ userId: updatedProfile.id, role: updatedProfile.role }))
                 .send({
                     native_language_id: updatedProfile.native_language_id,
@@ -248,7 +248,7 @@ describe('AuthController', () => {
         
         it('should return 401 if token is missing', async () => {
             const res = await request(app)
-                .put('/auth/profile/1')
+                .put('/auth/profile')
                 .send({
                     native_language_id: 1,
                     foreign_language_id: 2,
@@ -259,7 +259,7 @@ describe('AuthController', () => {
         it('should return 404 if user is not found', async () => {
             updateUserProfileMock.mockRejectedValue(new UserNotFoundError());
             const res = await request(app)
-                .put('/auth/profile/1')
+                .put('/auth/profile')
                 .set(createAuthHeader({ userId: '1', role: 'user' }))
                 .send({
                     native_language_id: 1,
@@ -274,7 +274,7 @@ describe('AuthController', () => {
         });
         it('should return 400 if languages are the same', async () => {
             const res = await request(app)
-                .put('/auth/profile/1')
+                .put('/auth/profile')
                 .set(createAuthHeader({ userId: '1', role: 'user' }))
                 .send({
                     native_language_id: 2,
@@ -285,13 +285,51 @@ describe('AuthController', () => {
             expect(updateUserProfileMock).not.toHaveBeenCalled();
         });
 
-        it('should return 400 if languages is missing', async () => {
+        it('should return 200 and updated user profile for nickname-only update', async () => {
+            const updatedProfile: UserProfileCredentials = {
+                id: '1',
+                nickname: 'newNickname',
+                email: 'nastya@mail.com',
+                role: 'user',
+                native_language_id: 1,
+                foreign_language_id: 2,
+            };
+            updateUserProfileMock.mockResolvedValue(updatedProfile);
+
             const res = await request(app)
-                .put('/auth/profile/1')
+                .put('/auth/profile')
                 .set(createAuthHeader({ userId: '1', role: 'user' }))
                 .send({
-                    foreign_language_id: 2,
+                    nickname: updatedProfile.nickname,
                 });
+
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(updatedProfile);
+            expect(updateUserProfileMock).toHaveBeenCalledOnce();
+            expect(updateUserProfileMock).toHaveBeenCalledWith('1', {
+                nickname: updatedProfile.nickname,
+            });
+        });
+
+        it('should return 400 if body is empty', async () => {
+            const res = await request(app)
+                .put('/auth/profile')
+                .set(createAuthHeader({ userId: '1', role: 'user' }))
+                .send({});
+
+            expect(res.status).toBe(400);
+            expect(res.body.code).toBe(authErrorCodes.validationFailed);
+            expect(updateUserProfileMock).not.toHaveBeenCalled();
+        });
+
+        it('should return 400 if body contains fields that profile update does not allow', async () => {
+            const res = await request(app)
+                .put('/auth/profile')
+                .set(createAuthHeader({ userId: '1', role: 'user' }))
+                .send({
+                    email: 'new-email@mail.com',
+                });
+
             expect(res.status).toBe(400);
             expect(res.body.code).toBe(authErrorCodes.validationFailed);
             expect(updateUserProfileMock).not.toHaveBeenCalled();

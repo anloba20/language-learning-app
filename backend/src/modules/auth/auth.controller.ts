@@ -1,8 +1,7 @@
 import type { Request, Response } from 'express';
 import { getUserProfile, registerUser, validateLoginCredentials, updateUserProfile } from './auth.service';
-import { loginSchema, registerSchema } from './auth.schema';
+import { loginSchema, registerSchema, updateProfileSchema } from './auth.schema';
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from './auth.errors';
-import { updateProfileSchema } from '../vocabulary/vocabulary.schema';
 
 export const loginController = async (req:Request, res: Response) => {
     try {

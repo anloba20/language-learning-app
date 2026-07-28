@@ -10,4 +10,4 @@ authRouter.post('/register', registerController);
 
 authRouter.get('/profile', authMiddleware, profileController);
 
-authRouter.put('/profile/:userId', authMiddleware, updateProfileController);
+authRouter.put('/profile', authMiddleware, updateProfileController);
