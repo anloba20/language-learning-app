@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import request from "supertest";
 import express from 'express';
-import { getUserProfile, registerUser, validateLoginCredentials } from "../../auth.service";
-import { loginController, profileController, registerController } from "../../auth.controller";
+import { getUserProfile, registerUser, updateUserProfile, validateLoginCredentials } from "../../auth.service";
+import { loginController, profileController, registerController, updateProfileController } from "../../auth.controller";
 import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
@@ -13,7 +13,8 @@ import { createAuthHeader } from '../../../utils';
 vi.mock('../../auth.service', () => ({
     registerUser: vi.fn(),
     validateLoginCredentials: vi.fn(),
-    getUserProfile: vi.fn()
+    getUserProfile: vi.fn(),
+    updateUserProfile: vi.fn(),
 }));
 
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.post('/auth/login', loginController);
 app.post('/auth/register', registerController);
 app.get('/auth/profile', authMiddleware, profileController);
+app.put('/auth/profile/:userId', authMiddleware, updateProfileController);
 
 
 describe('AuthController', () => {
@@ -206,6 +208,93 @@ describe('AuthController', () => {
             expect(res.status).toBe(404);
             expect(getUserProfileMock).toHaveBeenCalledOnce();
             expect(getUserProfileMock).toHaveBeenCalledWith('1');
+        });
+    });
+
+    describe('updateUserProfile', () => {
+        const updateUserProfileMock = vi.mocked(updateUserProfile);
+
+        beforeEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should return 200 and updated user profile for valid token and data', async () => {
+            const updatedProfile: UserProfileCredentials = {
+                id: '1',
+                nickname: 'validNickname',
+                email: 'nastya@mail.com',
+                role: 'user',
+                native_language_id: 1,
+                foreign_language_id: 2,
+            };
+            updateUserProfileMock.mockResolvedValue(updatedProfile);
+
+            const res = await request(app)
+                .put(`/auth/profile/${updatedProfile.id}`)
+                .set(createAuthHeader({ userId: updatedProfile.id, role: updatedProfile.role }))
+                .send({
+                    native_language_id: updatedProfile.native_language_id,
+                    foreign_language_id: updatedProfile.foreign_language_id,
+                });
+
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(updatedProfile);
+            expect(updateUserProfileMock).toHaveBeenCalledOnce();
+            expect(updateUserProfileMock).toHaveBeenCalledWith(updatedProfile.id, {
+                native_language_id: updatedProfile.native_language_id,
+                foreign_language_id: updatedProfile.foreign_language_id,
+            });
+        });
+        
+        it('should return 401 if token is missing', async () => {
+            const res = await request(app)
+                .put('/auth/profile/1')
+                .send({
+                    native_language_id: 1,
+                    foreign_language_id: 2,
+                });
+            expect(res.status).toBe(401);
+            expect(updateUserProfileMock).not.toHaveBeenCalled();
+        });
+        it('should return 404 if user is not found', async () => {
+            updateUserProfileMock.mockRejectedValue(new UserNotFoundError());
+            const res = await request(app)
+                .put('/auth/profile/1')
+                .set(createAuthHeader({ userId: '1', role: 'user' }))
+                .send({
+                    native_language_id: 1,
+                    foreign_language_id: 2,
+                });
+            expect(res.status).toBe(404);
+            expect(updateUserProfileMock).toHaveBeenCalledOnce();
+            expect(updateUserProfileMock).toHaveBeenCalledWith('1', {
+                native_language_id: 1,
+                foreign_language_id: 2,
+            });
+        });
+        it('should return 400 if languages are the same', async () => {
+            const res = await request(app)
+                .put('/auth/profile/1')
+                .set(createAuthHeader({ userId: '1', role: 'user' }))
+                .send({
+                    native_language_id: 2,
+                    foreign_language_id: 2,
+                });
+            expect(res.status).toBe(400);
+            expect(res.body.code).toBe(authErrorCodes.validationFailed);
+            expect(updateUserProfileMock).not.toHaveBeenCalled();
+        });
+
+        it('should return 400 if languages is missing', async () => {
+            const res = await request(app)
+                .put('/auth/profile/1')
+                .set(createAuthHeader({ userId: '1', role: 'user' }))
+                .send({
+                    foreign_language_id: 2,
+                });
+            expect(res.status).toBe(400);
+            expect(res.body.code).toBe(authErrorCodes.validationFailed);
+            expect(updateUserProfileMock).not.toHaveBeenCalled();
         });
     });
 });

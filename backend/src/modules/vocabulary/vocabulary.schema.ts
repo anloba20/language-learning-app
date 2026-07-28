@@ -23,3 +23,18 @@ export const vocabularyParamsSchema = z.object({
 export const emptyQuerySchema = z.object({}).strict();
 
 export type VocabularyParams = z.infer<typeof vocabularyParamsSchema>;
+
+export const updateProfileSchema = z.strictObject({
+  nickname: z.string().min(3).max(15).optional(),
+  native_language_id: z.number().int().positive().optional(),
+  foreign_language_id: z.number().int().positive().optional(),
+}).refine((data) => {
+  if (!data.native_language_id || !data.foreign_language_id) {
+    return false;
+  }
+
+  return data.native_language_id !== data.foreign_language_id;
+}, {
+  message: 'Native and foreign languages must be different',
+  path: ['foreign_language_id'],
+});

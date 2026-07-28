@@ -1,8 +1,8 @@
 import * as argon2 from "argon2";
 import { jwtSecret } from "../../config/auth";
-import type { AuthTokenPayload, RegisteredUser } from "./auth.types";
+import type { AuthTokenPayload, RegisteredUser, UserProfileCredentials } from "./auth.types";
 import jwt from 'jsonwebtoken';
-import { createUser, getUserById, getUserByNickname } from "./auth.database";
+import { createUser, getUserById, getUserByNickname, updateUser } from "./auth.database";
 import type { LoginInput, RegisterInput } from "./auth.schema";
 import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "./auth.errors";
 
@@ -76,3 +76,21 @@ export const getUserProfile = async (id: string) => {
     }
     return user;
 }
+
+export const updateUserProfile = async (id: string, profileData: Partial<UserProfileCredentials>) => {
+    try {
+        if (!isValidBigintId(id)) {
+            throw new InvalidCredentialsError();
+        }
+        const user = await getUserById(id);
+        if (!user) {
+            throw new UserNotFoundError();
+        }
+        return updateUser(id, profileData);
+    } catch (error: unknown) {
+        if (error instanceof UserNotFoundError || error instanceof InvalidCredentialsError) {
+            throw error;
+        }
+        throw error;
+    }
+};
