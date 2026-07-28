@@ -192,5 +192,33 @@
       "title": "Tiny Dialogues",
       "subtitle": "Дополняй ответы"
     }
+  },
+  "wordMatch": {
+    "boardAriaLabel": "Поле для сопоставления слов",
+    "actions": {
+      "back": "Назад",
+      "reset": "Сбросить"
+    },
+    "columns": {
+      "words": "Слова",
+      "translations": "Переводы"
+    },
+    "feedback": {
+      "chooseWordFirst": "Сначала выбери слово",
+      "correct": "Правильная пара",
+      "wrong": "Не совсем, попробуй другую пару"
+    },
+    "status": {
+      "completed": "Завершено",
+      "matched": "собрано",
+      "mistakes": "ошибок"
+    },
+    "vocabulary": {
+      "kicker": "Нужна практика",
+      "title": "Добавить сложные слова в словарь?",
+      "addAll": "Добавить все",
+      "add": "Добавить",
+      "saved": "Сохранено"
+    }
   }
 }

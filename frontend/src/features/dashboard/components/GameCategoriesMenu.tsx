@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './GameCategoriesMenu.css'
 
@@ -5,6 +6,7 @@ type LobbyGame = {
   titleKey: string
   subtitleKey: string
   accent: 'pink' | 'violet' | 'blue' | 'green' | 'orange' | 'rose'
+  path?: string
 }
 
 type LobbyCategory = {
@@ -18,7 +20,12 @@ const lobbyCategories: LobbyCategory[] = [
     value: 'vocabulary',
     labelKey: 'dashboard.categories.vocabulary',
     games: [
-      { titleKey: 'games.wordMatch.title', subtitleKey: 'games.wordMatch.subtitle', accent: 'violet' },
+      {
+        titleKey: 'games.wordMatch.title',
+        subtitleKey: 'games.wordMatch.subtitle',
+        accent: 'violet',
+        path: '/games/word-match',
+      },
       { titleKey: 'games.memoryCards.title', subtitleKey: 'games.memoryCards.subtitle', accent: 'pink' },
       { titleKey: 'games.flashcards.title', subtitleKey: 'games.flashcards.subtitle', accent: 'blue' },
       { titleKey: 'games.speedTranslation.title', subtitleKey: 'games.speedTranslation.subtitle', accent: 'green' },
@@ -134,16 +141,29 @@ export function GameCategoriesMenu() {
                   className="lobby-game-row"
                   aria-label={t('dashboard.lobby.categoryGamesAriaLabel', { category: categoryLabel })}
                 >
-                  {category.games.map((game) => (
-                    <button
-                      className={`lobby-game-card lobby-game-card-${game.accent}`}
-                      type="button"
-                      key={game.titleKey}
-                    >
-                      <span className="lobby-game-title">{t(game.titleKey)}</span>
-                      <span className="lobby-game-subtitle">{t(game.subtitleKey)}</span>
-                    </button>
-                  ))}
+                  {category.games.map((game) => {
+                    const cardClassName = `lobby-game-card lobby-game-card-${game.accent}`
+                    const cardContent = (
+                      <>
+                        <span className="lobby-game-title">{t(game.titleKey)}</span>
+                        <span className="lobby-game-subtitle">{t(game.subtitleKey)}</span>
+                      </>
+                    )
+
+                    if (game.path) {
+                      return (
+                        <Link className={cardClassName} key={game.titleKey} to={game.path}>
+                          {cardContent}
+                        </Link>
+                      )
+                    }
+
+                    return (
+                      <button className={cardClassName} type="button" key={game.titleKey}>
+                        {cardContent}
+                      </button>
+                    )
+                  })}
                 </div>
               </section>
             )

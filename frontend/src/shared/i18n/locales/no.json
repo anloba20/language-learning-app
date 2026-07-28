@@ -192,5 +192,33 @@
       "title": "Tiny Dialogues",
       "subtitle": "Fullfør svarene"
     }
+  },
+  "wordMatch": {
+    "boardAriaLabel": "Ordmatch-brett",
+    "actions": {
+      "back": "Tilbake",
+      "reset": "Start på nytt"
+    },
+    "columns": {
+      "words": "Ord",
+      "translations": "Oversettelser"
+    },
+    "feedback": {
+      "chooseWordFirst": "Velg et ord først",
+      "correct": "Riktig par",
+      "wrong": "Ikke helt, prøv et annet par"
+    },
+    "status": {
+      "completed": "Fullført",
+      "matched": "matchet",
+      "mistakes": "feil"
+    },
+    "vocabulary": {
+      "kicker": "Trenger øving",
+      "title": "Legge vanskelige ord til i ordlisten?",
+      "addAll": "Legg til alle",
+      "add": "Legg til",
+      "saved": "Lagret"
+    }
   }
 }

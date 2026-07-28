@@ -19,7 +19,7 @@
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.72);
   border-radius: 8px;
-  background: url('../assets/auth-visual.png') center / cover;
+  background: url('../../assets/auth-visual.png') center / cover;
   box-shadow: 0 24px 80px rgba(45, 12, 55, 0.22);
 }
 
@@ -30,7 +30,7 @@
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.08) 52%, rgba(0, 0, 0, 0.02)),
-    url('../assets/auth-visual.png') center / cover;
+    url('../../assets/auth-visual.png') center / cover;
   color: #ffffff;
 }
 
