@@ -7,7 +7,7 @@ import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
 import { authMiddleware } from "../../auth.middleware";
-import { createAuthHeader } from '../../../test/utils';
+import { createAuthHeader } from '../../../utils';
 
 
 vi.mock('../../auth.service', () => ({

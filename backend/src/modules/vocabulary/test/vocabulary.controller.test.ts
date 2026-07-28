@@ -2,7 +2,7 @@ import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { vocabularyRouter } from "../vocabulary.routes";
 import express from "express";
-import { createAuthHeader } from "../../test/utils";
+import { createAuthHeader } from "../../utils";
 import { fetchVocabulary } from "../vocabulary.service";
 
 vi.mock('../vocabulary.service', () => ({

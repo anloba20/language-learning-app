@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-import { jwtSecret } from '../../config/auth';
-import type { AuthTokenPayload } from '../auth/auth.types';
+import { jwtSecret } from '../config/auth';
+import type { AuthTokenPayload } from './auth/auth.types';
 
 export const createTestAuthToken = (
   payload: Partial<AuthTokenPayload> = {},
