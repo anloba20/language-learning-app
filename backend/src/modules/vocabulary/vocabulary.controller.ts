@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { emptyQuerySchema, vocabularyParamsSchema } from './vocabulary.schema';
 import { fetchVocabulary } from './vocabulary.service';
+import { LanguagesNotFound } from './vocabulary.errors';
 
 export const vocabularyController = async (req: Request, res: Response) => {
     const queryResult = emptyQuerySchema.safeParse(req.query);
@@ -23,8 +24,18 @@ export const vocabularyController = async (req: Request, res: Response) => {
         });
     }
 
-    const { slug: topicSlug, level } = paramsResult.data;
-    const { userId } = req.user;
-    const vocabulary = await fetchVocabulary(topicSlug, level, userId);
-    return res.status(200).json(vocabulary);
+    try {
+        const { slug: topicSlug, level } = paramsResult.data;
+        const { userId } = req.user;
+        const vocabulary = await fetchVocabulary(topicSlug, level, userId);
+        return res.status(200).json(vocabulary);
+    } catch (error: unknown) {
+        if (error instanceof LanguagesNotFound) {
+            return res.status(400).json({
+                message: error.message,
+                code: error.code,
+            });
+        }
+        throw error;
+    }
 };

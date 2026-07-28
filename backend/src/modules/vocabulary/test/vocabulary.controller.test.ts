@@ -4,6 +4,7 @@ import { vocabularyRouter } from "../vocabulary.routes";
 import express from "express";
 import { createAuthHeader } from "../../utils";
 import { fetchVocabulary } from "../vocabulary.service";
+import { LanguagesNotFound } from "../vocabulary.errors";
 
 vi.mock('../vocabulary.service', () => ({
     fetchVocabulary: vi.fn(),
@@ -55,6 +56,22 @@ describe('vocabularyController', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual(vocabulary);
+        expect(fetchVocabularyMock).toHaveBeenCalledOnce();
+        expect(fetchVocabularyMock).toHaveBeenCalledWith('animals', 1, '1');
+    });
+
+    it('should return 400 if LanguagesNotFound error is thrown', async () => {
+        fetchVocabularyMock.mockRejectedValue(new LanguagesNotFound());
+
+        const res = await request(app)
+            .get('/vocabulary/animals/level/A1')
+            .set(createAuthHeader({ userId: '1', role: 'user' }));
+
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual({
+            message: 'Languages not found',
+            code: 'VOCABULARY_LANGUAGES_NOT_FOUND',
+        });
         expect(fetchVocabularyMock).toHaveBeenCalledOnce();
         expect(fetchVocabularyMock).toHaveBeenCalledWith('animals', 1, '1');
     });
