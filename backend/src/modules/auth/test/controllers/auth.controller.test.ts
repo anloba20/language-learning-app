@@ -245,7 +245,7 @@ describe('AuthController', () => {
                 foreign_language_id: updatedProfile.foreign_language_id,
             });
         });
-        
+
         it('should return 401 if token is missing', async () => {
             const res = await request(app)
                 .put('/auth/profile')

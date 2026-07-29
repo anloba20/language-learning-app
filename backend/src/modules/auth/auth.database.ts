@@ -32,5 +32,5 @@ export const updateUser = async (id: string, userData: UpdateProfileInput): Prom
         .where({ id })
         .update({...userData, updated_at: db.fn.now()})
         .returning(['id', 'nickname', 'email', 'role', 'native_language_id', 'foreign_language_id']);
-    return user; 
+    return user;
 };

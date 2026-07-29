@@ -1,6 +1,6 @@
 import * as argon2 from "argon2";
 import { jwtSecret } from "../../config/auth";
-import type { AuthTokenPayload, RegisteredUser, UserProfileCredentials } from "./auth.types";
+import type { AuthTokenPayload, RegisteredUser } from "./auth.types";
 import jwt from 'jsonwebtoken';
 import { createUser, getUserById, getUserByNickname, updateUser } from "./auth.database";
 import type { LoginInput, RegisterInput, UpdateProfileInput } from "./auth.schema";

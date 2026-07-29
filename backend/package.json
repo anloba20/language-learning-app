@@ -7,6 +7,7 @@
     "dev": "tsx watch src/app.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "db:seed:vocabulary": "tsx src/db/scripts/import-vocabulary.ts",
     "test:watch": "vitest"
