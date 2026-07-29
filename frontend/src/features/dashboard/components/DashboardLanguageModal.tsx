@@ -1,71 +1,111 @@
 import { Button, Modal, Select, Stack } from '@mantine/core'
-import { useState } from 'react'
+import { notifications } from '@mantine/notifications'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../../auth/auth.hooks'
+import { getUserProfile, updateUserProfile } from '../../../shared/api/auth'
 import './DashboardLanguageModal.css'
 
-const LANGUAGE_PREFERENCES_STORAGE_KEY = 'language-preferences'
-
-const languageValues = ['russian', 'english', 'estonian', 'german', 'norwegian'] as const
-
-
-type LanguagePreferences = {
-  nativeLanguage: string
-  learningLanguage: string
-}
-
-function getStoredLanguagePreferences(): LanguagePreferences | null {
-  const rawPreferences = sessionStorage.getItem(LANGUAGE_PREFERENCES_STORAGE_KEY)
-
-  if (!rawPreferences) {
-    return null
-  }
-
-  try {
-    const preferences = JSON.parse(rawPreferences) as Partial<LanguagePreferences>
-
-    if (typeof preferences.nativeLanguage !== 'string' || typeof preferences.learningLanguage !== 'string') {
-      return null
-    }
-
-    return {
-      nativeLanguage: preferences.nativeLanguage,
-      learningLanguage: preferences.learningLanguage,
-    }
-  } catch {
-    return null
-  }
-}
+const languageValues = [
+  { value: '2', labelKey: 'languages.russian' },
+  { value: '1', labelKey: 'languages.english' },
+  { value: '3', labelKey: 'languages.estonian' },
+  { value: '4', labelKey: 'languages.german' },
+  { value: '5', labelKey: 'languages.norwegian' },
+] as const
 
 export function DashboardLanguageModal() {
   const { t } = useTranslation()
-  const [storedLanguagePreferences] = useState(() => getStoredLanguagePreferences())
-  const [nativeLanguage, setNativeLanguage] = useState<string | null>(
-    storedLanguagePreferences?.nativeLanguage ?? null,
-  )
-  const [learningLanguage, setLearningLanguage] = useState<string | null>(
-    storedLanguagePreferences?.learningLanguage ?? null,
-  )
-  const [isOpen, setIsOpen] = useState(!storedLanguagePreferences)
+  const { profile, setProfile, token } = useAuth()
+  const [nativeLanguage, setNativeLanguage] = useState<string | null>(null)
+  const [learningLanguage, setLearningLanguage] = useState<string | null>(null)
+  const [shouldOpenAfterProfileError, setShouldOpenAfterProfileError] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const profileNativeLanguage = profile?.native_language_id ? String(profile.native_language_id) : null
+  const profileLearningLanguage = profile?.foreign_language_id ? String(profile.foreign_language_id) : null
+  const selectedNativeLanguage = nativeLanguage ?? profileNativeLanguage
+  const selectedLearningLanguage = learningLanguage ?? profileLearningLanguage
+  const isOpen = profile
+    ? !profileNativeLanguage || !profileLearningLanguage
+    : shouldOpenAfterProfileError
 
   const languageOptions = languageValues.map((language) => ({
-    value: language,
-    label: t(`languages.${language}`),
+    value: language.value,
+    label: t(language.labelKey),
   }))
-  const nativeLanguageOptions = languageOptions.filter((language) => language.value !== learningLanguage)
-  const learningLanguageOptions = languageOptions.filter((language) => language.value !== nativeLanguage)
-  const hasSameLanguages = Boolean(nativeLanguage && learningLanguage && nativeLanguage === learningLanguage)
-  const canSaveLanguagePreferences = Boolean(nativeLanguage && learningLanguage && !hasSameLanguages)
+  const nativeLanguageOptions = languageOptions.filter((language) => language.value !== selectedLearningLanguage)
+  const learningLanguageOptions = languageOptions.filter((language) => language.value !== selectedNativeLanguage)
+  const hasSameLanguages = Boolean(
+    selectedNativeLanguage &&
+      selectedLearningLanguage &&
+      selectedNativeLanguage === selectedLearningLanguage,
+  )
+  const canSaveLanguagePreferences = Boolean(selectedNativeLanguage && selectedLearningLanguage && !hasSameLanguages)
 
-  const handleSaveLanguagePreferences = () => {
-    if (!nativeLanguage || !learningLanguage || hasSameLanguages) {
+  useEffect(() => {
+    if (!token) {
       return
     }
 
-    sessionStorage.setItem(
-      LANGUAGE_PREFERENCES_STORAGE_KEY,
-      JSON.stringify({ nativeLanguage, learningLanguage }),
-    )
-    setIsOpen(false)
+    if (profile) {
+      return
+    }
+
+    let shouldIgnoreResponse = false
+
+    async function loadProfile() {
+      try {
+        const loadedProfile = await getUserProfile(token)
+
+        if (shouldIgnoreResponse) {
+          return
+        }
+
+        setProfile(loadedProfile)
+      } catch (error) {
+        if (shouldIgnoreResponse) {
+          return
+        }
+
+        setShouldOpenAfterProfileError(true)
+        notifications.show({
+          title: t('dashboard.languageModal.title'),
+          message: error instanceof Error ? error.message : t('auth.notifications.genericError'),
+          color: 'grape',
+        })
+      }
+    }
+
+    void loadProfile()
+
+    return () => {
+      shouldIgnoreResponse = true
+    }
+  }, [profile, setProfile, t, token])
+
+  const handleSaveLanguagePreferences = async () => {
+    if (!token || !selectedNativeLanguage || !selectedLearningLanguage || hasSameLanguages) {
+      return
+    }
+
+    try {
+      setIsSaving(true)
+      const updatedProfile = await updateUserProfile(token, {
+        native_language_id: Number(selectedNativeLanguage),
+        foreign_language_id: Number(selectedLearningLanguage),
+      })
+
+      setProfile(updatedProfile)
+      setShouldOpenAfterProfileError(false)
+    } catch (error) {
+      notifications.show({
+        title: t('dashboard.languageModal.title'),
+        message: error instanceof Error ? error.message : t('auth.notifications.genericError'),
+        color: 'grape',
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -91,7 +131,7 @@ export function DashboardLanguageModal() {
           label={t('dashboard.languageModal.nativeLanguage')}
           placeholder={t('dashboard.languageModal.nativeLanguagePlaceholder')}
           data={nativeLanguageOptions}
-          value={nativeLanguage}
+          value={selectedNativeLanguage}
           allowDeselect={false}
           classNames={{
             input: 'language-select-input',
@@ -106,7 +146,7 @@ export function DashboardLanguageModal() {
           label={t('dashboard.languageModal.learningLanguage')}
           placeholder={t('dashboard.languageModal.learningLanguagePlaceholder')}
           data={learningLanguageOptions}
-          value={learningLanguage}
+          value={selectedLearningLanguage}
           allowDeselect={false}
           classNames={{
             input: 'language-select-input',
@@ -121,7 +161,8 @@ export function DashboardLanguageModal() {
 
         <Button
           fullWidth
-          disabled={!canSaveLanguagePreferences}
+          disabled={!canSaveLanguagePreferences || isSaving}
+          loading={isSaving}
           classNames={{ root: 'language-modal-submit' }}
           onClick={handleSaveLanguagePreferences}
         >

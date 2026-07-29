@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { getUserProfile, registerUser, validateLoginCredentials } from './auth.service';
-import { loginSchema, registerSchema } from './auth.schema';
+import { getUserProfile, registerUser, validateLoginCredentials, updateUserProfile } from './auth.service';
+import { loginSchema, registerSchema, updateProfileSchema } from './auth.schema';
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from './auth.errors';
 
 export const loginController = async (req:Request, res: Response) => {
@@ -51,6 +51,33 @@ export const profileController = async (req:Request, res: Response) => {
         }
         const userProfile = await getUserProfile(userId);
         res.status(200).json(userProfile);
+    } catch (error: unknown) {
+        if (error instanceof UserNotFoundError) {
+            return res.status(404).json({ code: error.code, message: error.message });
+        }
+        if (error instanceof InvalidCredentialsError) {
+            return res.status(401).json({ code: authErrorCodes.unauthorized, message: 'Unauthorized' });
+        }
+        throw error;
+    }
+};
+
+export const updateProfileController = async (req: Request, res: Response) => {
+    try {
+        const userId = req.user?.userId;
+        const result = updateProfileSchema.safeParse(req.body);
+        if (!result.success) {
+            return res.status(400).json({
+                code: authErrorCodes.validationFailed,
+                message: 'Invalid profile update data',
+                errors: result.error.issues,
+            });
+        }
+        if (!userId) {
+            return res.status(401).json({ code: authErrorCodes.unauthorized, message: 'Unauthorized' });
+        }
+        const updatedUserProfile = await updateUserProfile(userId, result.data);
+        res.status(200).json(updatedUserProfile);
     } catch (error: unknown) {
         if (error instanceof UserNotFoundError) {
             return res.status(404).json({ code: error.code, message: error.message });
