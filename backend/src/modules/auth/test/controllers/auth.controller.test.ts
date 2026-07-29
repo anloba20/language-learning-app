@@ -7,8 +7,7 @@ import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
 import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
 import type { LoginInput } from "../../auth.schema";
 import { authMiddleware } from "../../auth.middleware";
-import jwt from 'jsonwebtoken';
-import { jwtSecret } from "../../../../config/auth";
+import { createAuthHeader } from '../../../utils';
 
 
 vi.mock('../../auth.service', () => ({
@@ -169,17 +168,14 @@ describe('AuthController', () => {
                 nickname: 'validNickname',
                 email: 'validEmail@mail.com',
                 role: 'user',
+                native_language_id: 1,
+                foreign_language_id: 2,
             };
-            const token = jwt.sign(
-                { userId: expectedProfile.id, role: expectedProfile.role },
-                jwtSecret,
-                { expiresIn: '1h' }
-            );
             getUserProfileMock.mockResolvedValue(expectedProfile);
 
             const res = await request(app)
                 .get('/auth/profile')
-                .set('Authorization', `Bearer ${token}`);
+                .set(createAuthHeader({ userId: expectedProfile.id, role: expectedProfile.role }));
 
             expect(res.status).toBe(200);
             expect(res.body).toEqual(expectedProfile);
@@ -203,15 +199,10 @@ describe('AuthController', () => {
         });
 
         it('should return 404 if user is missing', async () => {
-            const token = jwt.sign(
-                { userId: '1', role: 'user' },
-                jwtSecret,
-                { expiresIn: '1h' }
-            );
             getUserProfileMock.mockRejectedValue(new UserNotFoundError());
             const res = await request(app)
                 .get('/auth/profile')
-                .set('Authorization', `Bearer ${token}`);
+                .set(createAuthHeader({ userId: '1', role: 'user' }));
             expect(res.status).toBe(404);
             expect(getUserProfileMock).toHaveBeenCalledOnce();
             expect(getUserProfileMock).toHaveBeenCalledWith('1');

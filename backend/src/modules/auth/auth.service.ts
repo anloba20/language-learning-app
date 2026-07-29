@@ -34,9 +34,8 @@ const isUniqueViolationError = (error: unknown): error is { code: '23505' } => {
 };
 
 const isValidBigintId = (id: string): boolean => {
-  return /^\d+$/.test(id);
+    return /^\d+$/.test(id);
 };
-
 
 export const registerUser = async ({ nickname, password, email }: RegisterInput): Promise<RegisteredUser> => {
     try {
@@ -68,8 +67,7 @@ export const validateLoginCredentials = async ({nickname, password}: LoginInput)
 }
 
 export const getUserProfile = async (id: string) => {
-    const userIdValidation = isValidBigintId(id);
-    if (!userIdValidation) {
+    if (!isValidBigintId(id)) {
         throw new InvalidCredentialsError();
     }
     const user = await getUserById(id);

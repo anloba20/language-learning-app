@@ -92,9 +92,7 @@ async function importVocabulary() {
 
   await trx.batchInsert('vocabulary', vocabularyRows, 500);
   console.log('Vocabulary import completed');
-});
-
-
+})
 }
 
 importVocabulary()
@@ -104,4 +102,4 @@ importVocabulary()
   })
   .finally(async () => {
     await db.destroy();
-  });
+});
