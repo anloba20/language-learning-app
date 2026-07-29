@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import type { AuthFormValues } from '../../features/auth/types'
+import type { AuthFormValues, AuthUserProfile, UpdateProfileValues } from '../../features/auth/types'
 
 const API_BASE_URL = 'http://localhost:3000'
 
@@ -48,6 +48,13 @@ function getToken(data: AuthResponse) {
   return token
 }
 
+function createAuthHeaders(token: string) {
+  return {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  }
+}
+
 export const registerUser = async (form: AuthFormValues): Promise<string> => {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
@@ -80,4 +87,34 @@ export const loginUser = async (form: AuthFormValues): Promise<string> => {
 
   const data = await response.json()
   return getToken(data)
+}
+
+export const getUserProfile = async (token: string): Promise<AuthUserProfile> => {
+  const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+    method: 'GET',
+    headers: createAuthHeaders(token),
+  })
+
+  if (response.status !== 200) {
+    throw new Error(await getErrorMessage(response, i18n.t('auth.serverErrors.userNotFound')))
+  }
+
+  return response.json()
+}
+
+export const updateUserProfile = async (
+  token: string,
+  profile: UpdateProfileValues,
+): Promise<AuthUserProfile> => {
+  const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+    method: 'PUT',
+    headers: createAuthHeaders(token),
+    body: JSON.stringify(profile),
+  })
+
+  if (response.status !== 200) {
+    throw new Error(await getErrorMessage(response, i18n.t('auth.serverErrors.validationFailed')))
+  }
+
+  return response.json()
 }
