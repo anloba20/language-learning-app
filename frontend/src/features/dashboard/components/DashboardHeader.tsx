@@ -31,6 +31,7 @@ export function DashboardHeader({ onLanguageSettingsOpen, onLogout }: DashboardH
       ? `${t(getLanguageCodeLabelKey(nativeLanguage))} -> ${t(getLanguageCodeLabelKey(learningLanguage))}`
       : t('dashboard.languageModal.title')
 
+
   return (
     <nav className="dashboard-navbar" aria-label={t('navigation.ariaLabel')}>
       <div className="dashboard-brand">

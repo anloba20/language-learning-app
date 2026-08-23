@@ -6,7 +6,8 @@ import { useAuth } from '../../auth/auth.hooks'
 import { getUserProfile, updateUserProfile } from '../../../shared/api/auth'
 import './DashboardLanguageModal.css'
 import { useLanguages } from '../../../shared/languages/languages.hooks'
-import { getLanguageLabelKey } from '../../../shared/languages/languages.utils'
+import { getLanguageById, getLanguageLabelKey } from '../../../shared/languages/languages.utils'
+import { changeUiLanguage } from '../../../shared/i18n'
 
 type DashboardLanguageModalProps = {
   isOpenRequested?: boolean
@@ -44,7 +45,7 @@ export function DashboardLanguageModal({ isOpenRequested = false, onClose }: Das
   const canSaveLanguagePreferences = Boolean(selectedNativeLanguage && selectedLearningLanguage && !hasSameLanguages)
 
   useEffect(() => {
-    if (!token || profile) {
+    if (!token && profile) {
       return
     }
 
@@ -93,6 +94,15 @@ export function DashboardLanguageModal({ isOpenRequested = false, onClose }: Das
       })
 
       setProfile(updatedProfile)
+
+      const savedNativeLanguage = getLanguageById(
+  languages,
+  String(updatedProfile.native_language_id),
+)
+
+if (savedNativeLanguage) {
+  changeUiLanguage(savedNativeLanguage.code)
+}
       setShouldOpenAfterProfileError(false)
       onClose?.()
     } catch (error) {
