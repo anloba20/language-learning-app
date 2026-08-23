@@ -1,4 +1,4 @@
-import type { Language } from '../languages/lanaguages.types'
+import type { Language } from '../languages/languages.types'
 import { API_BASE_URL } from './constants'
 
 export const fetchLanguages = async (): Promise<Language[]> => {

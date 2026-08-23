@@ -1,11 +1,10 @@
-import { Select } from '@mantine/core'
-import { Link, useLocation } from 'react-router-dom'
+﻿import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import catLogo from '../../../assets/cat-logo.png'
-import { changeUiLanguage, fallbackUiLanguage } from '../../../shared/i18n'
 import './DashboardHeader.css'
 import { useLanguages } from '../../../shared/languages/languages.hooks'
-import { getLanguageCodeLabelKey } from '../../../shared/languages/languages.utils'
+import { useAuth } from '../../auth/auth.hooks'
+import { getLanguageById, getLanguageCodeLabelKey } from '../../../shared/languages/languages.utils'
 
 const navLinks = [
   { labelKey: 'navigation.games', to: '#games' },
@@ -15,17 +14,22 @@ const navLinks = [
 ]
 
 type DashboardHeaderProps = {
+  onLanguageSettingsOpen: () => void
   onLogout: () => void
 }
 
-export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
+export function DashboardHeader({ onLanguageSettingsOpen, onLogout }: DashboardHeaderProps) {
   const location = useLocation()
-  const { i18n, t } = useTranslation()
-  const activeHash = location.hash || '#games'
+  const { t } = useTranslation()
+  const { profile } = useAuth()
   const { languages } = useLanguages()
-  const currentLanguage = languages.some((language) => language.code === i18n.language)
-    ? i18n.language
-    : fallbackUiLanguage
+  const activeHash = location.hash || '#games'
+  const nativeLanguage = getLanguageById(languages, String(profile?.native_language_id))
+  const learningLanguage = getLanguageById(languages, String(profile?.foreign_language_id))
+  const languagePairLabel =
+    nativeLanguage && learningLanguage
+      ? `${t(getLanguageCodeLabelKey(nativeLanguage))} -> ${t(getLanguageCodeLabelKey(learningLanguage))}`
+      : t('dashboard.languageModal.title')
 
   return (
     <nav className="dashboard-navbar" aria-label={t('navigation.ariaLabel')}>
@@ -40,30 +44,13 @@ export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
       </div>
 
       <div className="dashboard-nav-area">
-        <Select
-          aria-label={t('auth.availableLanguagesAriaLabel')}
-          rightSection={null}
-          rightSectionWidth={0}
-          allowDeselect={false}
-          classNames={{
-            dropdown: 'dashboard-language-select-dropdown',
-            input: 'dashboard-language-select-input',
-            option: 'dashboard-language-select-option',
-            root: 'dashboard-language-select',
-            section: 'dashboard-language-select-section',
-          }}
-          comboboxProps={{ withinPortal: false }}
-          data={languages.map((language) => ({
-            value: language.code,
-            label: t(getLanguageCodeLabelKey(language)),
-          }))}
-          value={currentLanguage}
-          onChange={(value) => {
-            if (value) {
-              changeUiLanguage(value)
-            }
-          }}
-        />
+        <button
+          type="button"
+          className="dashboard-language-trigger"
+          onClick={onLanguageSettingsOpen}
+        >
+          {languagePairLabel}
+        </button>
 
         <div className="dashboard-nav-links" aria-label={t('navigation.mainSectionsAriaLabel')}>
           {navLinks.map((link) => {

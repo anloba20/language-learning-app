@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import type { Language } from './lanaguages.types'
+import type { Language } from './languages.types'
 
 export type LanguagesContextValue = {
   languages: Language[]

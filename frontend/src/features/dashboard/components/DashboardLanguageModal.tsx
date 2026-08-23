@@ -8,7 +8,12 @@ import './DashboardLanguageModal.css'
 import { useLanguages } from '../../../shared/languages/languages.hooks'
 import { getLanguageLabelKey } from '../../../shared/languages/languages.utils'
 
-export function DashboardLanguageModal() {
+type DashboardLanguageModalProps = {
+  isOpenRequested?: boolean
+  onClose?: () => void
+}
+
+export function DashboardLanguageModal({ isOpenRequested = false, onClose }: DashboardLanguageModalProps) {
   const { t } = useTranslation()
   const { profile, setProfile, token } = useAuth()
   const [nativeLanguage, setNativeLanguage] = useState<string | null>(null)
@@ -19,10 +24,9 @@ export function DashboardLanguageModal() {
   const profileLearningLanguage = profile?.foreign_language_id ? String(profile.foreign_language_id) : null
   const selectedNativeLanguage = nativeLanguage ?? profileNativeLanguage
   const selectedLearningLanguage = learningLanguage ?? profileLearningLanguage
-  const isOpen = profile
-    ? !profileNativeLanguage || !profileLearningLanguage
-    : shouldOpenAfterProfileError
-  
+  const requiresLanguagePreferences = Boolean(profile && (!profileNativeLanguage || !profileLearningLanguage))
+  const isOpen = requiresLanguagePreferences || shouldOpenAfterProfileError || isOpenRequested
+
   const { languages } = useLanguages()
 
   const languageOptions = languages.map((language) => ({
@@ -36,6 +40,7 @@ export function DashboardLanguageModal() {
       selectedLearningLanguage &&
       selectedNativeLanguage === selectedLearningLanguage,
   )
+
   const canSaveLanguagePreferences = Boolean(selectedNativeLanguage && selectedLearningLanguage && !hasSameLanguages)
 
   useEffect(() => {
@@ -89,6 +94,7 @@ export function DashboardLanguageModal() {
 
       setProfile(updatedProfile)
       setShouldOpenAfterProfileError(false)
+      onClose?.()
     } catch (error) {
       notifications.show({
         title: t('dashboard.languageModal.title'),
@@ -103,12 +109,16 @@ export function DashboardLanguageModal() {
   return (
     <Modal
       opened={isOpen}
-      onClose={() => undefined}
+      onClose={() => {
+        if (!requiresLanguagePreferences) {
+          onClose?.()
+        }
+      }}
       title={t('dashboard.languageModal.title')}
       centered
-      closeOnClickOutside={false}
-      closeOnEscape={false}
-      withCloseButton={false}
+      closeOnClickOutside={!requiresLanguagePreferences}
+      closeOnEscape={!requiresLanguagePreferences}
+      withCloseButton={!requiresLanguagePreferences}
       classNames={{
         content: 'language-modal',
         header: 'language-modal-header',

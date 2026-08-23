@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { LanguagesContext } from './languages.context'
-import type { Language } from './lanaguages.types'
+import type { Language } from './languages.types'
 import { fetchLanguages } from '../api/languages'
 
 type LanguagesProviderProps = {
