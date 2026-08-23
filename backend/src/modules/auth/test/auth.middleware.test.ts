@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import express from 'express';
 import request from "supertest";
-import { authMiddleware } from "../../auth.middleware";
-import { authErrorCodes } from "../../auth.errors";
-import { createAuthHeader } from "../../../utils";
+import { authMiddleware } from "../auth.middleware";
+import { authErrorCodes } from "../auth.errors";
+import { createAuthHeader } from "../../utils";
 
 describe('AuthMiddleware', () => {
   const app = express();

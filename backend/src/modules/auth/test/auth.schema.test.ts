@@ -1,5 +1,5 @@
 ﻿import { describe, expect, it } from "vitest";
-import { registerSchema } from "../../auth.schema";
+import { registerSchema } from "../auth.schema";
 
 const validRegisterInput = {
     nickname: 'validNickname',

@@ -6,13 +6,13 @@ import {
     hashPassword,
     registerUser,
     validateLoginCredentials,
-} from "../../auth.service";
-import type { AuthTokenPayload, RegisteredUserDbType, UserCredentials, UserProfileCredentials } from "../../auth.types";
-import { jwtSecret } from "../../../../config/auth";
-import { createUser, getUserById, getUserByNickname } from "../../auth.database";
-import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
+} from "../auth.service";
+import type { AuthTokenPayload, RegisteredUserDbType, UserCredentials, UserProfileCredentials } from "../auth.types";
+import { jwtSecret } from "../../../config/auth";
+import { createUser, getUserById, getUserByNickname } from "../auth.database";
+import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../auth.errors";
 
-vi.mock('../../auth.database', () => ({
+vi.mock('../auth.database', () => ({
     createUser: vi.fn(),
     getUserById: vi.fn(),
     getUserByNickname: vi.fn(),
