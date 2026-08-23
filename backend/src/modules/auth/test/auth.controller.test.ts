@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import request from "supertest";
 import express from 'express';
-import { getUserProfile, registerUser, updateUserProfile, validateLoginCredentials } from "../../auth.service";
-import { loginController, profileController, registerController, updateProfileController } from "../../auth.controller";
-import type { RegisteredUser, UserProfileCredentials } from "../../auth.types";
-import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../../auth.errors";
-import type { LoginInput } from "../../auth.schema";
-import { authMiddleware } from "../../auth.middleware";
-import { createAuthHeader } from '../../../utils';
+import { getUserProfile, registerUser, updateUserProfile, validateLoginCredentials } from "../auth.service";
+import { loginController, profileController, registerController, updateProfileController } from "../auth.controller";
+import type { RegisteredUser, UserProfileCredentials } from "../auth.types";
+import { authErrorCodes, InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../auth.errors";
+import type { LoginInput } from "../auth.schema";
+import { authMiddleware } from "../auth.middleware";
+import { createAuthHeader } from '../../utils';
 
 
-vi.mock('../../auth.service', () => ({
+vi.mock('../auth.service', () => ({
     registerUser: vi.fn(),
     validateLoginCredentials: vi.fn(),
     getUserProfile: vi.fn(),

@@ -28,13 +28,13 @@ describe('LanguagesService', () => {
     expect(fetchLanguagesMock).toHaveBeenCalledOnce()
   })
 
- it('should throw DatabaseError if database request fails', async () => {
-  fetchLanguagesMock.mockRejectedValue(new Error('Database is down'))
+  it('should throw DatabaseError if database request fails', async () => {
+    fetchLanguagesMock.mockRejectedValue(new Error('Database is down'))
 
-  const result = getLanguages()
+    const result = getLanguages()
 
-  await expect(result).rejects.toThrow(DatabaseError)
-  await expect(result).rejects.toThrow('Failed to fetch languages from the database')
-  expect(fetchLanguagesMock).toHaveBeenCalledOnce()
-})
+    await expect(result).rejects.toThrow(DatabaseError)
+    await expect(result).rejects.toThrow('Failed to fetch languages from the database')
+    expect(fetchLanguagesMock).toHaveBeenCalledOnce()
+  })
 })
