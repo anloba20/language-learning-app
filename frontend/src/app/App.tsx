@@ -7,6 +7,7 @@ import { AuthPage } from '../pages/auth/AuthPage'
 import { DashboardPage } from '../pages/dashboard/DashboardPage'
 import { WordMatchPage } from '../pages/WordMatchPage'
 import { theme } from './theme'
+import { LanguagesProvider } from '../shared/languages/languages.store'
 
 function AppContent() {
   const { isAuthenticated } = useAuth()
@@ -28,9 +29,11 @@ function App() {
   return (
     <MantineProvider theme={theme}>
       <Notifications position="bottom-right" zIndex={1000} />
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
+      <LanguagesProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </LanguagesProvider>
     </MantineProvider>
   )
 }

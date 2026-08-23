@@ -34,11 +34,4 @@ describe('languageController', () => {
         expect(res.body).toEqual(languages);
         expect(getLanguagesMock).toHaveBeenCalledOnce();
     });
-
-    it('should return 401 if token is missing', async () => {
-        const res = await request(app).get('/languages');
-
-        expect(res.status).toBe(401);
-        expect(getLanguagesMock).not.toHaveBeenCalled();
-    });
 });

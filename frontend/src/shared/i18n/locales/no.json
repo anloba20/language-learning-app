@@ -25,6 +25,13 @@
       "en": "ENG",
       "de": "GER",
       "no": "NOR"
+    },
+    "names": {
+      "en": "Engelsk",
+      "ru": "Russisk",
+      "et": "Estisk",
+      "de": "Tysk",
+      "no": "Norsk"
     }
   },
   "auth": {

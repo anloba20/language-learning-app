@@ -25,7 +25,14 @@
       "de": "GER",
       "no": "NOR"
     },
-    "norwegian": "Norra keel"
+    "norwegian": "Norra keel",
+    "names": {
+      "en": "Inglise keel",
+      "ru": "Vene keel",
+      "et": "Eesti keel",
+      "de": "Saksa keel",
+      "no": "Norra keel"
+    }
   },
   "auth": {
     "ariaLabel": "Autentimine",

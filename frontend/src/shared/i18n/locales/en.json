@@ -25,7 +25,14 @@
       "de": "GER",
       "no": "NOR"
     },
-    "norwegian": "Norwegian"
+    "norwegian": "Norwegian",
+    "names": {
+      "en": "English",
+      "ru": "Russian",
+      "et": "Estonian",
+      "de": "German",
+      "no": "Norwegian"
+    }
   },
   "auth": {
     "ariaLabel": "Authentication",

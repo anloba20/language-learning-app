@@ -2,8 +2,10 @@ import { Select } from '@mantine/core'
 import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import catLogo from '../../../assets/cat-logo.png'
-import { changeUiLanguage, fallbackUiLanguage, uiLanguages } from '../../../shared/i18n'
+import { changeUiLanguage, fallbackUiLanguage } from '../../../shared/i18n'
 import './DashboardHeader.css'
+import { useLanguages } from '../../../shared/languages/languages.hooks'
+import { getLanguageCodeLabelKey } from '../../../shared/languages/languages.utils'
 
 const navLinks = [
   { labelKey: 'navigation.games', to: '#games' },
@@ -20,7 +22,8 @@ export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
   const location = useLocation()
   const { i18n, t } = useTranslation()
   const activeHash = location.hash || '#games'
-  const currentLanguage = uiLanguages.some((language) => language.code === i18n.language)
+  const { languages } = useLanguages()
+  const currentLanguage = languages.some((language) => language.code === i18n.language)
     ? i18n.language
     : fallbackUiLanguage
 
@@ -50,9 +53,9 @@ export function DashboardHeader({ onLogout }: DashboardHeaderProps) {
             section: 'dashboard-language-select-section',
           }}
           comboboxProps={{ withinPortal: false }}
-          data={uiLanguages.map((language) => ({
+          data={languages.map((language) => ({
             value: language.code,
-            label: t(language.labelKey),
+            label: t(getLanguageCodeLabelKey(language)),
           }))}
           value={currentLanguage}
           onChange={(value) => {

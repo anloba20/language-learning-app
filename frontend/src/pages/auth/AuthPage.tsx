@@ -8,8 +8,10 @@ import { AuthModeSwitch } from '../../features/auth/components/AuthModeSwitch'
 import { useAuth } from '../../features/auth/auth.hooks'
 import type { AuthFormValues, AuthMode } from '../../features/auth/types'
 import { loginUser, registerUser } from '../../shared/api/auth'
-import { changeUiLanguage, uiLanguages } from '../../shared/i18n'
+import { changeUiLanguage } from '../../shared/i18n'
 import './AuthPage.css'
+import { useLanguages } from '../../shared/languages/languages.hooks'
+import { getLanguageCodeLabelKey } from '../../shared/languages/languages.utils'
 
 const authFieldTranslationKeys: Record<keyof AuthFormValues, string> = {
   confirm_password: 'auth.form.confirmPassword',
@@ -39,6 +41,7 @@ export function AuthPage() {
   const [form, setForm] = useState<AuthFormValues>(() => createInitialAuthForm('login'))
   const { login } = useAuth()
   const { i18n, t } = useTranslation()
+  const { languages } = useLanguages()
 
   const activeUiLanguage = i18n.resolvedLanguage ?? i18n.language
   const submitText = mode === 'login' ? t('auth.submit.signIn') : t('auth.submit.createAccount')
@@ -103,7 +106,7 @@ export function AuthPage() {
             <p className="auth-kicker">{t('app.name')}</p>
             <h1 id="auth-title">{t('app.tagline')}</h1>
             <div className="auth-languages" aria-label={t('auth.availableLanguagesAriaLabel')}>
-              {uiLanguages.map((language) => (
+              {languages.map((language) => (
                 <button
                   key={language.code}
                   type="button"
@@ -111,7 +114,7 @@ export function AuthPage() {
                   data-active={activeUiLanguage === language.code || undefined}
                   onClick={() => changeUiLanguage(language.code)}
                 >
-                  {t(language.labelKey)}
+                  {t(getLanguageCodeLabelKey(language))}
                 </button>
               ))}
             </div>

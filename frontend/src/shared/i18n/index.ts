@@ -8,14 +8,6 @@ import ru from './locales/ru.json'
 
 export const UI_LANGUAGE_STORAGE_KEY = 'ui-language'
 
-export const uiLanguages = [
-  { code: 'ru', labelKey: 'languages.codes.ru' },
-  { code: 'et', labelKey: 'languages.codes.et' },
-  { code: 'en', labelKey: 'languages.codes.en' },
-  { code: 'de', labelKey: 'languages.codes.de' },
-  { code: 'no', labelKey: 'languages.codes.no' },
-] as const
-
 export const fallbackUiLanguage = 'en';
 export const savedLanguage = localStorage.getItem(UI_LANGUAGE_STORAGE_KEY)
 
@@ -33,8 +25,8 @@ i18n.use(initReactI18next).init({
     no: { translation: no },
     ru: { translation: ru },
   },
-  lng: savedLanguage ?? 'en',
-  fallbackLng: 'en',
+  lng: savedLanguage ?? fallbackUiLanguage,
+  fallbackLng: fallbackUiLanguage,
   interpolation: {
     escapeValue: false,
   },

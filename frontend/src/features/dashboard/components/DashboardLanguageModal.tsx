@@ -5,14 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../auth/auth.hooks'
 import { getUserProfile, updateUserProfile } from '../../../shared/api/auth'
 import './DashboardLanguageModal.css'
-
-const languageValues = [
-  { value: '2', labelKey: 'languages.russian' },
-  { value: '1', labelKey: 'languages.english' },
-  { value: '3', labelKey: 'languages.estonian' },
-  { value: '4', labelKey: 'languages.german' },
-  { value: '5', labelKey: 'languages.norwegian' },
-] as const
+import { useLanguages } from '../../../shared/languages/languages.hooks'
+import { getLanguageLabelKey } from '../../../shared/languages/languages.utils'
 
 export function DashboardLanguageModal() {
   const { t } = useTranslation()
@@ -28,10 +22,12 @@ export function DashboardLanguageModal() {
   const isOpen = profile
     ? !profileNativeLanguage || !profileLearningLanguage
     : shouldOpenAfterProfileError
+  
+  const { languages } = useLanguages()
 
-  const languageOptions = languageValues.map((language) => ({
-    value: language.value,
-    label: t(language.labelKey),
+  const languageOptions = languages.map((language) => ({
+    value: language.id,
+    label: t(getLanguageLabelKey(language)),
   }))
   const nativeLanguageOptions = languageOptions.filter((language) => language.value !== selectedLearningLanguage)
   const learningLanguageOptions = languageOptions.filter((language) => language.value !== selectedNativeLanguage)
@@ -43,11 +39,7 @@ export function DashboardLanguageModal() {
   const canSaveLanguagePreferences = Boolean(selectedNativeLanguage && selectedLearningLanguage && !hasSameLanguages)
 
   useEffect(() => {
-    if (!token) {
-      return
-    }
-
-    if (profile) {
+    if (!token || profile) {
       return
     }
 
