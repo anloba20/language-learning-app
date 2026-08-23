@@ -60,11 +60,6 @@ export function DashboardLanguageModal({ isOpenRequested = false, onClose }: Das
         }
 
         setProfile(loadedProfile)
-        const nativeLanguageCode = getLanguageById(languages, String(loadedProfile.native_language_id))?.code
-
-        if (nativeLanguageCode) {
-          changeUiLanguage(nativeLanguageCode)
-        }
       } catch (error) {
         if (shouldIgnoreResponse) {
           return
@@ -84,7 +79,15 @@ export function DashboardLanguageModal({ isOpenRequested = false, onClose }: Das
     return () => {
       shouldIgnoreResponse = true
     }
-  }, [languages, profile, setProfile, t, token])
+  }, [profile, setProfile, t, token])
+
+  useEffect(() => {
+    const nativeLanguageCode = getLanguageById(languages, String(profile?.native_language_id))?.code
+
+    if (nativeLanguageCode) {
+      changeUiLanguage(nativeLanguageCode)
+    }
+  }, [languages, profile?.native_language_id])
 
   const handleSaveLanguagePreferences = async () => {
     if (!token || !selectedNativeLanguage || !selectedLearningLanguage || hasSameLanguages) {
