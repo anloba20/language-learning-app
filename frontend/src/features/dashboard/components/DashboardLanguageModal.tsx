@@ -60,6 +60,8 @@ export function DashboardLanguageModal({ isOpenRequested = false, onClose }: Das
         }
 
         setProfile(loadedProfile)
+        const languageCode = getLanguageById(languages, String(loadedProfile.native_language_id))?.code ?? ''
+        changeUiLanguage(languageCode)
       } catch (error) {
         if (shouldIgnoreResponse) {
           return
